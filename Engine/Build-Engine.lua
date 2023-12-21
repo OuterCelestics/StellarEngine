@@ -1,37 +1,41 @@
 project "Engine"
-   kind "SharedLib"
-   language "C++"
-   cppdialect "C++20"
-   targetdir "Binaries/%{cfg.buildcfg}"
-   staticruntime "off"
+    kind "SharedLib"
+    language "C++"
+    cppdialect "C++20"
+    targetdir "Binaries/%{cfg.buildcfg}"
+    staticruntime "off"
 
-   files { "source/**.h", "source/**.cpp" }
+    files {
+        "source/**.h",
+        "source/**.cpp",
+        "source/**.c"
+    }
 
-   includedirs
-   {
-      "source"
-   }
+    includedirs
+    {
+       "source"
+    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/")
+    targetdir ("../Binaries/" .. OutputDir .. "/")
+    objdir ("../Binaries/Intermediates/" .. OutputDir .. "/")
 
-   filter "system:windows"
-       systemversion "latest"
-       defines { }
+    filter "system:windows"
+        systemversion "latest"
+        defines { }
 
-   filter "configurations:Debug"
-       defines { "DEBUG", "ST_PLATFORM_WINDOWS", "ST_BUILD_DLL" }
-       runtime "Debug"
-       symbols "On"
+    filter "configurations:Debug"
+        defines { "DEBUG", "ST_PLATFORM_WINDOWS", "ST_BUILD_DLL" }
+        runtime "Debug"
+        symbols "On"
 
-   filter "configurations:Release"
-       defines { "RELEASE", "ST_PLATFORM_WINDOWS", "ST_BUILD_DLL" }
-       runtime "Release"
-       optimize "On"
-       symbols "On"
+    filter "configurations:Release"
+        defines { "RELEASE", "ST_PLATFORM_WINDOWS", "ST_BUILD_DLL" }
+        runtime "Release"
+        optimize "On"
+        symbols "On"
 
-   filter "configurations:Dist"
-       defines { "DIST", "ST_PLATFORM_WINDOWS", "ST_BUILD_DLL" }
-       runtime "Release"
-       optimize "On"
-       symbols "Off"
+    filter "configurations:Dist"
+        defines { "DIST", "ST_PLATFORM_WINDOWS", "ST_BUILD_DLL" }
+        runtime "Release"
+        optimize "On"
+        symbols "Off"
