@@ -1,8 +1,8 @@
 -- premake5.lua
-workspace "New Project"
+workspace "StellarEngine"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "App"
+   startproject "Application"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -10,8 +10,8 @@ workspace "New Project"
 
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
-group "Core"
-	include "Core/Build-Core.lua"
+group "Engine"
+	include "Engine/Build-Engine.lua"
 group ""
 
-include "App/Build-App.lua"
+include "Application/Build-Application.lua"

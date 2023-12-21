@@ -1,45 +1,45 @@
-project "App"
+project "Application"
    kind "ConsoleApp"
    language "C++"
    cppdialect "C++20"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "Source/**.h", "Source/**.cpp" }
+   files { "source/**.h", "source/**.cpp" }
 
    includedirs
    {
-      "Source",
+      "source",
 
 	  -- Include Core
-	  "../Core/Source"
+	  "../Engine/source"
    }
 
    links
    {
-      "Core"
+      "Engine"
    }
 
-   targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir ("../Binaries/" .. OutputDir .. "/")
+   objdir ("../Binaries/Intermediates/" .. OutputDir .. "/")
 
    filter "system:windows"
        systemversion "latest"
-       defines { "WINDOWS" }
+       defines { "WINDOWS", "ST_PLATFORM_WINDOWS" }
 
    filter "configurations:Debug"
-       defines { "DEBUG" }
+       defines { "DEBUG", "ST_PLATFORM_WINDOWS" }
        runtime "Debug"
        symbols "On"
 
    filter "configurations:Release"
-       defines { "RELEASE" }
+       defines { "RELEASE", "ST_PLATFORM_WINDOWS" }
        runtime "Release"
        optimize "On"
        symbols "On"
 
    filter "configurations:Dist"
-       defines { "DIST" }
+       defines { "DIST", "ST_PLATFORM_WINDOWS" }
        runtime "Release"
        optimize "On"
        symbols "Off"
