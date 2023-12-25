@@ -13,7 +13,20 @@ project "Engine"
 
     includedirs
     {
-       "source"
+       "source",
+    }
+
+    sysincludedirs {
+        "$(SolutionDir)Dependencies/include"
+    }
+
+    syslibdirs {
+        "$(SolutionDir)Dependencies/lib"
+    }
+
+    links {
+        "opengl32.lib",
+        "GLFW.lib"
     }
 
     targetdir ("../Binaries/" .. OutputDir .. "/")

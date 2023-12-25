@@ -17,6 +17,14 @@ project "Application"
         -- Include Core
 	    "../Engine/source"
     }
+
+    sysincludedirs {
+        "$(SolutionDir)Dependencies/include"
+    }
+
+    syslibdirs {
+        "$(SolutionDir)Dependencies/lib"
+    }
    
     links
     {

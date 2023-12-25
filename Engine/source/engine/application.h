@@ -1,5 +1,7 @@
 // std
 #include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include "core.h"
 
@@ -11,6 +13,7 @@ namespace Engine {
 
         void Run();
     private:
+        GLFWwindow* m_Window;
     };
 
     // To be defined in CLIENT
