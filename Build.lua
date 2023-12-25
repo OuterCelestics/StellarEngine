@@ -11,7 +11,7 @@ workspace "StellarEngine"
 OutputDir = "%{cfg.system}-%{cfg.architecture}/%{cfg.buildcfg}"
 
 group "Dependencies"
-   include "Submodules/GLFW/Build-Windows.lua"
+   include "Submodules/GLFW/Build-GLFW.lua"
 
 group "Engine"
 	include "Engine/Build-Engine.lua"
