@@ -1,6 +1,8 @@
 # Directories
 .vs/
 Binaries/
+Dependencies/
+Submodules/
 
 # Files
 *.vcxproj
@@ -8,6 +10,7 @@ Binaries/
 *.vcxproj.filters
 *.sln
 *.log
+*.pyc
 Makefile
 
 # Exclude
