@@ -27,13 +27,16 @@ namespace Engine {
 
 	Application::~Application()
 	{
-
+		glfwTerminate();
+		glfwDestroyWindow(m_Window);
 	}
 
 	void Application::Run()
 	{
 		while (!glfwWindowShouldClose(m_Window)) {
 			// Render here
+			glClear(GL_COLOR_BUFFER_BIT);
+			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
 			// Swap front and back buffers
 			glfwSwapBuffers(m_Window);
