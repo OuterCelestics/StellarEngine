@@ -19,6 +19,10 @@ namespace Engine {
 		// Make the window's context current
 		glfwMakeContextCurrent(m_Window);
 
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			std::cout << "Failed to initialize GLAD" << std::endl;
+		}
 	}
 
 	Application::~Application()

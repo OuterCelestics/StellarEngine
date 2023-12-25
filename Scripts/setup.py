@@ -13,3 +13,4 @@ if __name__ == "__main__":
     download.download_and_extract(zip_file_url, extract_folder)
     copy.copy_files_by_extension("Submodules/Source/Binaries/Debug-windows-x86_64", "Dependencies/lib", extension=".lib")
     copy.copy_files("Submodules/GLFW/include/GLFW", "Dependencies/include/GLFW")
+    copy.copy_files("Dependencies/src", "Engine/source")

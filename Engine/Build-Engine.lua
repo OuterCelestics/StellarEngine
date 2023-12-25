@@ -8,7 +8,7 @@ project "Engine"
     files {
         "source/**.h",
         "source/**.cpp",
-        "source/**.c"
+        "source/**.c",
     }
 
     includedirs
