@@ -9,7 +9,7 @@ This is a little instruction on how you should setup the engine for use!
 ## Getting Started
 Clone the repository & submodules
 ```bash
-git clone -b dev --recursive https://github.com/your-username/StellarEngine.git
+git clone -b dev --recursive https://github.com/Luke-Creative-Media/StellarEngine.git
 ```
 Make sure you download the latest premake version: https://premake.github.io/download/ (currently using v5-beta2)
 
