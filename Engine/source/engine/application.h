@@ -5,6 +5,7 @@
 
 #include "core.h"
 #include "components/input/input.h"
+#include "rendering/layer.h"
 
 namespace Engine {
 
@@ -19,6 +20,9 @@ namespace Engine {
     private:
         GLFWwindow* m_Window;
         InputEvent* m_Input = new InputEvent;
+
+        GraphicsAPIFactory factory;
+        GraphicsAPI* api = factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
     };
 
     // To be defined in CLIENT
