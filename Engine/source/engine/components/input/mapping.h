@@ -6,5 +6,6 @@ namespace Engine::Input {
 		BACKWARD,
 		LEFT,
 		RIGHT,
+		JUMP
 	};
 }

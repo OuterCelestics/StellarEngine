@@ -28,6 +28,8 @@ namespace Engine::Input {
 				return GLFW_KEY_A;
 			case InputAction::RIGHT:
 				return GLFW_KEY_D;
+			case InputAction::JUMP:
+				return GLFW_KEY_SPACE;
 		}
 	}
 }

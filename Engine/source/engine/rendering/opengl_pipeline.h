@@ -11,12 +11,14 @@ namespace Engine
 {
 	class OpenGLRenderPipeline : GraphicsAPI {
 	public:
-		// Inherited via GraphicsAPI
 		void Initialize() override;
 
 		void Render() override;
 
 		void Terminate() override;
+
+	private:
+
 
 	};
 
