@@ -24,10 +24,4 @@ call premake5 --file=Build.lua %choice%
 echo Premake setup completed!
 
 :: Pause the script to see the output before closing
-
-
-python3 Scripts/setup.py
-
-echo Setup completed!
-
 pause
