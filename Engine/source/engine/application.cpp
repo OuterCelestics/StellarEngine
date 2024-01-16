@@ -18,25 +18,31 @@ namespace Engine {
 		}
 		// Make the window's context current
 		glfwMakeContextCurrent(m_Window);
+		glfwSetWindowUserPointer(m_Window, &m_Input);
 
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-		{
-			std::cout << "Failed to initialize GLAD" << std::endl;
-		}
+		api->Initialize();
 	}
 
 	Application::~Application()
 	{
+		api->Terminate();
 		glfwTerminate();
 		glfwDestroyWindow(m_Window);
 	}
 
 	void Application::Run()
 	{
+		m_Input->BindAction(InputAction::FORWARD, []()
+		{
+			std::cout << "Forward" << std::endl;
+		});
+
 		while (!glfwWindowShouldClose(m_Window)) {
-			// Render here
-			glClear(GL_COLOR_BUFFER_BIT);
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			// process input
+			m_Input->processInput(m_Window);
+
+			// render
+			api->Render();
 
 			// Swap front and back buffers
 			glfwSwapBuffers(m_Window);

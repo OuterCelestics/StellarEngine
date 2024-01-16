@@ -11,11 +11,13 @@ project "Application"
         "source/**.c"
      }
     
-    includedirs
-    {
+    includedirs{
        "source",
         -- Include Core
-	    "../Engine/source"
+	    "../Engine/source",
+        "$(SolutionDir)Submodules/GLFW/include",
+        "$(SolutionDir)Dependencies/Glad/include",
+        "$(SolutionDir)Submodules/ImGui/"
     }
 
     sysincludedirs {
@@ -26,9 +28,9 @@ project "Application"
         "$(SolutionDir)Dependencies/lib"
     }
    
-    links
-    {
-       "Engine"
+    links {
+       "Engine",
+       "glfw"
     }
    
     targetdir ("../Binaries/" .. OutputDir .. "/")
