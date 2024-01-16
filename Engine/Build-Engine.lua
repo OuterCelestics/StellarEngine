@@ -11,13 +11,11 @@ project "Engine"
         "source/**.c",
     }
 
-    includedirs
-    {
+    includedirs {
        "source",
-    }
-
-    sysincludedirs {
-        "$(SolutionDir)Dependencies/include"
+       "$(SolutionDir)Submodules/GLFW/include",
+       "$(SolutionDir)Dependencies/Glad/include",
+       "$(SolutionDir)Submodules/ImGui/"
     }
 
     syslibdirs {
@@ -25,8 +23,8 @@ project "Engine"
     }
 
     links {
-        "opengl32.lib",
-        "GLFW.lib"
+        "opengl32",
+        "glfw"
     }
 
     targetdir ("../Binaries/" .. OutputDir .. "/")
