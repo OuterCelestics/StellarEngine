@@ -16,7 +16,7 @@ namespace Engine
 		//glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 		//
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
 		//Create window
 		//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
@@ -28,14 +28,22 @@ namespace Engine
 			glfwTerminate();
 			//return -1;
 		}
-	
-	
 		glfwMakeContextCurrent(m_window);
+
+		// set callbacks
+		glfwSetFramebufferSizeCallback(m_window, framebuffer_size_callback);
+
 		glfwSwapInterval(0);
 	}
-	void WindowManager::KillWindow()
+	void WindowManager::Terminate()
 	{
 		glfwTerminate();
 		glfwDestroyWindow(m_window);
+	}
+
+	// Callbacks
+	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	{
+		glViewport(0, 0, width, height);
 	}
 }

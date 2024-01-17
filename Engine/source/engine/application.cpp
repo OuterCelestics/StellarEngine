@@ -16,7 +16,7 @@ namespace Engine
 	Application::~Application()
 	{
 		api->Terminate();
-		m_Window->KillWindow();
+		m_Window->Terminate();
 	}
 
 	void Application::Run()

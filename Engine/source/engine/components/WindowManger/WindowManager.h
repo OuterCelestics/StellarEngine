@@ -5,12 +5,17 @@ namespace Engine
 {
 	class WindowManager
 	{
+	private:
+		GLFWwindow* m_window;
+
 	public:
 		WindowManager(int width, int height, const char* name);
 	
-		GLFWwindow* m_window;
 		GLFWwindow* getWindow() { return m_window; }
-		void KillWindow();
+		void Terminate();
+
+	private:
+		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	};
 }
 

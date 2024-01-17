@@ -1,7 +1,7 @@
 #ifndef GRAPHICS_API_H
 #define GRAPHICS_API_H
 
-#include "opengl_pipeline.h"
+#include "opengl/opengl_pipeline.h"
 
 namespace Engine 
 {
