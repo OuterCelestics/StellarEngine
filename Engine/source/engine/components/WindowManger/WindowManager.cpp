@@ -44,6 +44,9 @@ namespace Engine
 	// Callbacks
 	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
+		float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+
 		glViewport(0, 0, width, height);
+		glfwSetWindowAspectRatio(window, width, height);
 	}
 }

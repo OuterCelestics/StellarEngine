@@ -6,10 +6,14 @@
 #include <iostream>
 
 #include "../graphics_api.h"
+#include "shaders/shaderClass.h"
+#include "buffers/VAO.h"
+#include "buffers/VBO.h"
 
 namespace Engine
 {
-	class OpenGLRenderPipeline : GraphicsAPI {
+	class OpenGLRenderPipeline : GraphicsAPI 
+	{
 	public:
 		void Initialize() override;
 
@@ -18,8 +22,9 @@ namespace Engine
 		void Terminate() override;
 
 	private:
-
-
+		Shaders* shaderProgram = nullptr;
+		VAO* VAO1 = nullptr;
+		VBO* VBO1 = nullptr;
 	};
 
 }
