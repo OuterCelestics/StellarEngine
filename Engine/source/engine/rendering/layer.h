@@ -1,15 +1,18 @@
 #ifndef GRAPHICS_API_H
 #define GRAPHICS_API_H
 
-#include "engine/rendering/opengl_pipeline.h"
+#include "opengl/opengl_pipeline.h"
 
-namespace Engine {
-    enum class GraphicsAPIType {
+namespace Engine 
+{
+    enum class GraphicsAPIType 
+    {
         OpenGL,
         D3D12
     };
 
-    class GraphicsAPIFactory {
+    class GraphicsAPIFactory 
+    {
     public:
         GraphicsAPI* CreateGraphicsAPI(GraphicsAPIType type) {
             switch (type) {

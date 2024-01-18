@@ -6,6 +6,7 @@
 #include "core.h"
 #include "components/input/input.h"
 #include "rendering/layer.h"
+#include "components/WindowManger/WindowManager.h"
 
 namespace Engine {
 
@@ -18,7 +19,8 @@ namespace Engine {
 
         void Run();
     private:
-        GLFWwindow* m_Window;
+        WindowManager* m_Window = new WindowManager(900, 800, "StellarEngine");
+        
         InputEvent* m_Input = new InputEvent;
 
         GraphicsAPIFactory factory;

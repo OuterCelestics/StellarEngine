@@ -12,7 +12,7 @@ project "Engine"
     }
 
     includedirs {
-       "source",
+       "$(SolutionDir)source",
        "$(SolutionDir)Submodules/GLFW/include",
        "$(SolutionDir)Dependencies/Glad/include",
        "$(SolutionDir)Submodules/ImGui/"
