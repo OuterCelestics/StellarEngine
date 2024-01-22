@@ -21,11 +21,12 @@ namespace Engine {
 
         void Run();
     private:
-        WindowManager* m_Window = new WindowManager(900, 800, "StellarEngine");
+        WindowManager* m_Window = nullptr;
         InputEvent* m_Input = new InputEvent;
 
         GraphicsAPIFactory factory;
         GraphicsAPI* api = factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL); 
+        ConfigLoader* config = nullptr;
     };
 
     // To be defined in CLIENT

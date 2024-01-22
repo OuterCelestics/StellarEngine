@@ -12,13 +12,20 @@ namespace Engine {
     public:
         ConfigLoader(std::string folder, std::string file_name);
         bool writeConfig(const std::map<std::string, std::map<std::string, std::string>>& configData);
+        bool loadConfig();
+        std::string getValue(const std::string& section, const std::string& key) const;
+
     private:
-        bool loadConfig(std::string file_path);
-        bool createConfig(std::string file_path);
+        bool createConfig();
+        bool parseConfig();
 
         std::string folder;
         std::string file_path;
         std::ofstream config_file;
+        std::map<std::string, std::map<std::string, std::string>> configData;
+
+        // Helper function to remove leading and trailing whitespaces from a string
+        static std::string trim(const std::string& str);
     };
 }
 

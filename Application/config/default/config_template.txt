@@ -1,5 +1,3 @@
 ; Copyright(c) Luke-Creative-Media & Jonas de Bruin | Stellar Engine
 ; Note that modifying this file can result in unexpected behaviour in editor and or game crashes, be carefull!
-
 ; config
-

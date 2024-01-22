@@ -4,18 +4,12 @@ namespace Engine
 {
 	Application::Application()
 	{
-
 		std::cout << "Stellar Engine is initialized" << std::endl;
+
+		config = new ConfigLoader("config", "BaseEngine.ini");
+		m_Window = new WindowManager(std::stoi(config->getValue("general", "window_width")), std::stoi(config->getValue("general", "window_height")), config->getValue("general", "window_title").c_str());
+		
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
-
-		ConfigLoader config("config", "BaseEngine.ini");
-
-		std::map<std::string, std::map<std::string, std::string>> configData;
-		configData["general"] = { {"window_width", "500"}, {"window_height", "500"} };
-		configData["graphics"] = { {"bUseOpenGL", "yes"} };
-
-		config.writeConfig(configData);
-
 		api->Initialize();
 	}
 
