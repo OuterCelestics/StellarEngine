@@ -4,15 +4,7 @@ namespace Engine {
 	ConfigLoader::ConfigLoader(std::string folder, std::string file_name)
 		: folder(folder), file_path(folder + "/" + file_name)
 	{
-		if (!std::filesystem::exists(folder)) {
-			if (!std::filesystem::create_directory(folder)) {
-				std::cout << "Error creating folder: " << folder << std::endl;
-			}
-			createConfig();
-		}
-		else {
-			parseConfig();
-		}
+		parseConfig();
 	}
 
 	bool ConfigLoader::writeConfig(const std::map<std::string, std::map<std::string, std::string>>& configData)
@@ -42,7 +34,25 @@ namespace Engine {
 		return parseConfig();
 	}
 
-	std::string ConfigLoader::getValue(const std::string& section, const std::string& key) const {
+	int ConfigLoader::getInteger(const std::string& section, const std::string& key) const {
+		auto sectionIter = configData.find(section);
+		if (sectionIter != configData.end()) {
+			auto keyIter = sectionIter->second.find(key);
+			if (keyIter != sectionIter->second.end()) {
+				return std::stoi(keyIter->second);
+			}
+			else {
+				std::cerr << "Key not found: " << key << " in section: " << section << std::endl;
+			}
+		}
+		else {
+			std::cerr << "Section not found: " << section << std::endl;
+		}
+		return 0; // Return an empty string if the key or section is not found
+	}
+
+	std::string ConfigLoader::getString(const std::string& section, const std::string& key) const
+	{
 		auto sectionIter = configData.find(section);
 		if (sectionIter != configData.end()) {
 			auto keyIter = sectionIter->second.find(key);
@@ -57,31 +67,6 @@ namespace Engine {
 			std::cerr << "Section not found: " << section << std::endl;
 		}
 		return ""; // Return an empty string if the key or section is not found
-	}
-
-
-	bool ConfigLoader::createConfig()
-	{
-		config_file.open(file_path);
-		std::ifstream template_file("config/default/config_template.txt");
-		if (!template_file.is_open()) {
-			std::cout << "Error opening template file: template.txt" << std::endl;
-			config_file.close();
-			return false;
-		}
-
-		// Read the content from the template file
-		std::stringstream template_content;
-		template_content << template_file.rdbuf();
-
-		// Write the template content to the new config file
-		config_file << template_content.str();
-
-		// Close both files
-		template_file.close();
-		config_file.close();
-
-		return true;
 	}
 
 	bool ConfigLoader::parseConfig()

@@ -13,12 +13,11 @@ namespace Engine {
         ConfigLoader(std::string folder, std::string file_name);
         bool writeConfig(const std::map<std::string, std::map<std::string, std::string>>& configData);
         bool loadConfig();
-        std::string getValue(const std::string& section, const std::string& key) const;
+        int getInteger(const std::string& section, const std::string& key) const;
+        std::string getString(const std::string& section, const std::string& key) const;
 
     private:
-        bool createConfig();
         bool parseConfig();
-
         std::string folder;
         std::string file_path;
         std::ofstream config_file;
