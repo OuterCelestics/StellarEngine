@@ -17,6 +17,7 @@ project "Application"
 	    "../Engine/source",
         "$(SolutionDir)Submodules/GLFW/include",
         "$(SolutionDir)Dependencies/Glad/include",
+        "$(SolutionDir)Dependencies/glm",
         "$(SolutionDir)Submodules/ImGui/"
     }
 
