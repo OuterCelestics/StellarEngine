@@ -82,8 +82,11 @@ namespace Engine {
 
 	void ConfigLoader::SetInt(const std::string section, const std::string key, int value) const
 	{
-		// Open the config file for reading and writing
-		std::fstream configFile(file_path, std::ios::in | std::ios::out);
+		// Update configData map with the new value
+		configData[section][key] = std::to_string(value);
+
+		// Open the config file for writing
+		std::ofstream configFile(file_path);
 
 		// Check if the file is opened successfully
 		if (!configFile.is_open())
@@ -93,43 +96,16 @@ namespace Engine {
 			return;
 		}
 
-		std::string line;
-		std::string currentSection;
-		bool sectionFound = false;
-
-		// Iterate through the file to find the section and key
-		while (std::getline(configFile, line))
+		// Write the updated configData to the file
+		for (const auto& category : configData)
 		{
-			// Trim leading and trailing whitespaces
-			line = trim(line);
-
-			// Check for section header
-			if (line.size() > 2 && line.front() == '[' && line.back() == ']')
+			configFile << "[" << category.first << "]" << std::endl;
+			for (const auto& kvp : category.second)
 			{
-				currentSection = line.substr(1, line.size() - 2);
-				if (currentSection == section)
-				{
-					sectionFound = true;
-				}
+				configFile << kvp.first << "=" << kvp.second << std::endl;
 			}
-
-			// Check for key-value pairs
-			if (sectionFound && line.find(key + "=") != std::string::npos)
-			{
-				// Update the existing value
-				configFile.seekp(configFile.tellg() - line.length() - 1); // Move the cursor back to overwrite
-				configFile << key << "=" << value;
-				configFile.close();
-				return;
-			}
+			configFile << std::endl;
 		}
-
-		// If section or key not found, append to the end of the file
-		if (!sectionFound)
-		{
-			configFile << "[" << section << "]\n";
-		}
-		configFile << key << "=" << value << "\n";
 
 		// Close the file
 		configFile.close();
