@@ -77,7 +77,7 @@ namespace Engine
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
-	void OpenGLRenderPipeline::Render()
+	void OpenGLRenderPipeline::Render(ConfigLoader* config)
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -86,7 +86,7 @@ namespace Engine
 		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
-		projection = glm::perspective(glm::radians(45.0f), 800.0f / 800.0f, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(45.0f), (float)config->GetInteger("general", "window_height") / (float)config->GetInteger("general", "window_width"), 0.1f, 100.0f);
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 		shaderProgram->Activate();

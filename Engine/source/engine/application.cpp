@@ -32,7 +32,7 @@ namespace Engine
 			m_Input->processInput(m_Window->getWindow());
 
 			// render
-			api->Render();
+			api->Render(config);
 
 			// Swap front and back buffers
 			glfwSwapBuffers(m_Window->getWindow());

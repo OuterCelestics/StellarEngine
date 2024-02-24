@@ -47,6 +47,6 @@ namespace Engine
 		float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
 
 		glViewport(0, 0, width, height);
-		glfwSetWindowAspectRatio(window, width, height);
+		//glfwSetWindowAspectRatio(window, width, height);
 	}
 }

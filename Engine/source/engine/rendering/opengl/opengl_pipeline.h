@@ -12,6 +12,7 @@
 #include "shaders/shaderClass.h"
 #include "buffers/VAO.h"
 #include "buffers/VBO.h"
+#include "../../components/config/config_loader.h"
 
 namespace Engine
 {
@@ -20,7 +21,7 @@ namespace Engine
 	public:
 		void Initialize() override;
 
-		void Render() override;
+		void Render(ConfigLoader* config) override;
 
 		void Terminate() override;
 
