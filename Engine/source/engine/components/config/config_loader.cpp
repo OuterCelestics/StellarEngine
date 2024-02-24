@@ -4,10 +4,10 @@ namespace Engine {
 	ConfigLoader::ConfigLoader(std::string folder, std::string file_name)
 		: folder(folder), file_path(folder + "/" + file_name)
 	{
-		parseConfig();
+		m_ParseConfig();
 	}
 
-	bool ConfigLoader::writeConfig(const std::map<std::string, std::map<std::string, std::string>>& configData)
+	bool ConfigLoader::WriteConfig(const std::map<std::string, std::map<std::string, std::string>>& configData)
 	{
 		config_file.open(file_path, std::ios::out | std::ios::app);  // Open file in append mode
 		if (!config_file.is_open()) {
@@ -29,12 +29,12 @@ namespace Engine {
 		return true;
 	}
 
-	bool ConfigLoader::loadConfig()
+	bool ConfigLoader::LoadConfig()
 	{
-		return parseConfig();
+		return m_ParseConfig();
 	}
 
-	int ConfigLoader::getInteger(const std::string& section, const std::string& key) const {
+	int ConfigLoader::GetInteger(const std::string& section, const std::string& key) const {
 		auto sectionIter = configData.find(section);
 		if (sectionIter != configData.end()) {
 			auto keyIter = sectionIter->second.find(key);
@@ -69,7 +69,7 @@ namespace Engine {
 		return ""; // Return an empty string if the key or section is not found
 	}
 
-	bool ConfigLoader::parseConfig()
+	bool ConfigLoader::m_ParseConfig()
 	{
 		std::ifstream file(file_path);
 		if (!file.is_open()) {
