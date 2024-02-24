@@ -1,6 +1,4 @@
-#ifndef CONFIG_LOADER_H
-#define CONFIG_LOADER_H
-
+#pragma once
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -13,14 +11,19 @@ namespace Engine {
         ConfigLoader(std::string folder, std::string file_name);
         bool WriteConfig(const std::map<std::string, std::map<std::string, std::string>>& configData);
         bool LoadConfig();
-        int GetInteger(const std::string& section, const std::string& key) const;
-        std::string getString(const std::string& section, const std::string& key) const;
-        //void SetInt
+
+        // Get values
+        int GetInteger(const std::string section, const std::string key) const;
+        std::string getString(const std::string section, const std::string key) const;
+        
+        // Set values
+        void SetInt(const std::string section, const std::string key, int value) const;
+        void SetString(const std::string section, const std::string key) const;
 
     private:
         bool m_ParseConfig();
         std::string folder;
-        std::string file_path;
+        const std::string file_path;
         std::ofstream config_file;
         std::map<std::string, std::map<std::string, std::string>> configData;
 
@@ -28,5 +31,3 @@ namespace Engine {
         static std::string trim(const std::string& str);
     };
 }
-
-#endif // CONFIG_LOADER_H
