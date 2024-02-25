@@ -58,6 +58,27 @@ namespace Engine {
 		return 0; // Return an empty string if the key or section is not found
 	}
 
+	float ConfigLoader::GetFloat(const std::string section, const std::string key) const
+	{
+		auto sectionIter = configData.find(section);
+		if (sectionIter != configData.end())
+		{
+			auto keyIter = sectionIter->second.find(key);
+			if (keyIter != sectionIter->second.end())
+			{
+				return std::stof(keyIter->second);
+			}
+			else
+			{
+				std::cerr << "Key not found: " << key << " in section: " << section << std::endl;
+			}
+		}
+		else
+		{
+			std::cerr << "Section not found: " << section << std::endl;
+		}
+		return 0; // Return an empty string if the key or section is not found
+	}
 	std::string ConfigLoader::getString(const std::string section, const std::string key) const
 	{
 		auto sectionIter = configData.find(section);

@@ -14,6 +14,7 @@ namespace Engine {
 
         // Get values
         int GetInteger(const std::string section, const std::string key) const;
+        float GetFloat(const std::string section, const std::string key) const;
         std::string getString(const std::string section, const std::string key) const;
         
         // Set values
