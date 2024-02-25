@@ -10,6 +10,7 @@ namespace Engine
 		m_Window = new WindowManager(config->GetInteger("general", "window_width"), config->GetInteger("general", "window_height"), config->getString("general", "window_title").c_str());
 		
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
+		config->SetInt("general", "window_height", 50);
 		api->Initialize();
 	}
 
