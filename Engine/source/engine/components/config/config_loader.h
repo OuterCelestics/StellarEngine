@@ -25,7 +25,7 @@ namespace Engine {
         std::string folder;
         const std::string file_path;
         std::ofstream config_file;
-        std::map<std::string, std::map<std::string, std::string>> configData;
+        mutable std::map<std::string, std::map<std::string, std::string>> configData;
 
         // Helper function to remove leading and trailing whitespaces from a string
         static std::string trim(const std::string& str);
