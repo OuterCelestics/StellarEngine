@@ -49,13 +49,21 @@ namespace Engine
 	// Callbacks
 	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
-		if (m_Config != nullptr)
-		{
+		if (m_Config != nullptr) {
 			m_Config->SetInt("general", "window_height", height);
 			m_Config->SetInt("general", "window_width", width);
 			m_Config->SetFloat("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
 
-		}else {
+			int maximized = glfwGetWindowAttrib(window, GLFW_MAXIMIZED);
+
+			if (maximized == GLFW_TRUE) {
+				m_Config->SetInt("general", "window_maximized", 1);
+			} 
+			else {
+				m_Config->SetInt("general", "window_maximized", 0);
+			}
+		}
+		else {
 			printf("Config is null");
 			glfwSetWindowAspectRatio(window, width, height);
 		}

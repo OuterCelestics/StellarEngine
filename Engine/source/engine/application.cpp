@@ -10,6 +10,14 @@ namespace Engine
 		m_Window = new WindowManager(config->GetInteger("general", "window_width"), config->GetInteger("general", "window_height"), config->getString("general", "window_title").c_str(), config);
 
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
+
+		if (config->GetInteger("general", "window_maximized") == GLFW_TRUE) {
+			glfwMaximizeWindow(m_Window->getWindow());
+		}
+		else {
+			config->SetInt("general", "window_maximized", 0);
+		}
+
 		api->Initialize();
 	}
 
