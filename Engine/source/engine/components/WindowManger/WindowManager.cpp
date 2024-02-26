@@ -53,7 +53,7 @@ namespace Engine
 		{
 			m_Config->SetInt("general", "window_height", height);
 			m_Config->SetInt("general", "window_width", width);
-			m_Config->SetInt("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
+			m_Config->SetFloat("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
 
 		}else {
 			printf("Config is null");
