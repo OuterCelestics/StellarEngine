@@ -7,10 +7,9 @@ namespace Engine
 		std::cout << "Stellar Engine is initialized" << std::endl;
 
 		config = new ConfigLoader("config", "BaseEngine.ini");
-		m_Window = new WindowManager(config->GetInteger("general", "window_width"), config->GetInteger("general", "window_height"), config->getString("general", "window_title").c_str());
-		
+		m_Window = new WindowManager(config->GetInteger("general", "window_width"), config->GetInteger("general", "window_height"), config->getString("general", "window_title").c_str(), config);
+
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
-		config->SetInt("general", "window_height", 50);
 		api->Initialize();
 	}
 

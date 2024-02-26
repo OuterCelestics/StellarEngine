@@ -1,9 +1,12 @@
 #include "WindowManager.h"
 #include <stdio.h>
+
 namespace Engine
 {
-	WindowManager::WindowManager(int width, int height, const char* name)
+	WindowManager::WindowManager(int width, int height, const char* name, ConfigLoader* config)
 	{
+		// Set config
+		m_config = config;
 		//Init GLFW
 		glfwInit();
 		// uncomment for (borderless) fullscreen mode 
@@ -44,7 +47,9 @@ namespace Engine
 	// Callbacks
 	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
-		float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		m_config->SetInt("general", "window_height", height);
+		m_config->SetInt("general", "window_width", width);
+		m_config->SetInt("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
 
 		glViewport(0, 0, width, height);
 		//glfwSetWindowAspectRatio(window, width, height);
