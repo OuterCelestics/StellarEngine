@@ -3,10 +3,12 @@
 
 namespace Engine
 {
+	ConfigLoader* WindowManager::m_Config = nullptr;
+
 	WindowManager::WindowManager(int width, int height, const char* name, ConfigLoader* config)
 	{
 		// Set config
-		m_config = config;
+		m_Config = config;
 		//Init GLFW
 		glfwInit();
 		// uncomment for (borderless) fullscreen mode 
@@ -47,11 +49,16 @@ namespace Engine
 	// Callbacks
 	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
-		m_config->SetInt("general", "window_height", height);
-		m_config->SetInt("general", "window_width", width);
-		m_config->SetInt("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
+		if (m_Config != nullptr)
+		{
+			m_Config->SetInt("general", "window_height", height);
+			m_Config->SetInt("general", "window_width", width);
+			m_Config->SetInt("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
 
+		}else {
+			printf("Config is null");
+			glfwSetWindowAspectRatio(window, width, height);
+		}
 		glViewport(0, 0, width, height);
-		//glfwSetWindowAspectRatio(window, width, height);
 	}
 }

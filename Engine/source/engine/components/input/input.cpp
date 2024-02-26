@@ -30,6 +30,8 @@ namespace Engine::Input {
 				return GLFW_KEY_D;
 			case InputAction::JUMP:
 				return GLFW_KEY_SPACE;
+			default: 
+				return -1;
 		}
 	}
 }

@@ -26,6 +26,7 @@ namespace Engine {
 
         GraphicsAPIFactory factory;
         GraphicsAPI* api = factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL); 
+    public: 
         ConfigLoader* config = nullptr;
     };
 
