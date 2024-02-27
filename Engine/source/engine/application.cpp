@@ -7,7 +7,12 @@ namespace Engine
 		std::cout << "Stellar Engine is initialized" << std::endl;
 
 		config = new ConfigLoader("config", "BaseEngine.ini");
-		m_Window = new WindowManager(config->GetInteger("general", "window_width"), config->GetInteger("general", "window_height"), config->getString("general", "window_title").c_str(), config);
+		
+		m_window_height = config->GetInteger("general", "window_height");
+		m_window_width = config->GetInteger("general", "window_width");
+		m_aspect_ratio = config->GetFloat("general", "window_aspect_ratio");
+		
+		m_Window = new WindowManager(&m_window_width, &m_window_height, &m_aspect_ratio, config->getString("general", "window_title").c_str(), config);
 
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
 
@@ -25,7 +30,7 @@ namespace Engine
 	Application::~Application()
 	{
 		api->Terminate();
-		m_Window->Terminate();
+		m_Window->Terminate(config);
 	}
 
 	void Application::Run()
@@ -40,7 +45,7 @@ namespace Engine
 			m_Input->processInput(m_Window->getWindow());
 
 			// render
-			api->Render(config);
+			api->Render(config, &m_aspect_ratio);
 
 			// Swap front and back buffers
 			glfwSwapBuffers(m_Window->getWindow());

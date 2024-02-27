@@ -20,14 +20,17 @@ namespace Engine {
         virtual ~Application(); // Destructor to clean up allocated resources
 
         void Run();
+    public: 
+        ConfigLoader* config = nullptr;
     private:
         WindowManager* m_Window = nullptr;
         InputEvent* m_Input = new InputEvent;
 
         GraphicsAPIFactory factory;
-        GraphicsAPI* api = factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL); 
-    public: 
-        ConfigLoader* config = nullptr;
+        GraphicsAPI* api =  factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
+        int m_window_height;
+        int m_window_width;
+        float m_aspect_ratio;
     };
 
     // To be defined in CLIENT

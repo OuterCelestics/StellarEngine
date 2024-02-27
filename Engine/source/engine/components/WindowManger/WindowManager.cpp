@@ -3,10 +3,18 @@
 
 namespace Engine
 {
+	// Initialise static members
 	ConfigLoader* WindowManager::m_Config = nullptr;
+	int* WindowManager::m_window_height = 0;
+	int* WindowManager::m_window_width = 0;
+	float* WindowManager::m_aspect_ratio = 0;
 
-	WindowManager::WindowManager(int width, int height, const char* name, ConfigLoader* config)
+	WindowManager::WindowManager(int* width, int* height, float* aspect_ratio, const char* name, ConfigLoader* config)
 	{
+		m_window_height = height;
+		m_window_width = width;
+		m_aspect_ratio = aspect_ratio;
+
 		// Set config
 		m_Config = config;
 		//Init GLFW
@@ -25,7 +33,7 @@ namespace Engine
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
 		//Create window
 		//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
-		m_window = glfwCreateWindow(width, height, name, NULL, NULL);
+		m_window = glfwCreateWindow(*width, *height, name, NULL, NULL);
 	
 		if (m_window == NULL)
 		{
@@ -40,8 +48,13 @@ namespace Engine
 
 		glfwSwapInterval(0);
 	}
-	void WindowManager::Terminate()
+	void WindowManager::Terminate(ConfigLoader* config)
 	{
+		// Write the final window dimentsions to the config file
+		config->SetInt("general", "window_height", *m_window_height);
+		config->SetInt("general", "window_width", *m_window_width);
+		config->SetFloat ("general", "window_aspect_ratio", *m_aspect_ratio);
+
 		glfwTerminate();
 		glfwDestroyWindow(m_window);
 	}
@@ -50,9 +63,9 @@ namespace Engine
 	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
 		if (m_Config != nullptr) {
-			m_Config->SetInt("general", "window_height", height);
-			m_Config->SetInt("general", "window_width", width);
-			m_Config->SetFloat("general", "window_aspect_ratio", static_cast<float>(width) / static_cast<float>(height));
+			*m_window_height = height;
+			*m_window_width = width;
+			*m_aspect_ratio = (float)width / (float)height;
 
 			int maximized = glfwGetWindowAttrib(window, GLFW_MAXIMIZED);
 
