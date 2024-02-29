@@ -20,8 +20,7 @@ namespace Engine {
         // Set values
         void SetInt(const std::string section, const std::string key, int value) const;
         void SetFloat(const std::string section, const std::string key, float value) const;
-        void SetString(const std::string section, const std::string key) const;
-
+        void SetString(const std::string section, const std::string key, std::string value) const;
     private:
         bool m_ParseConfig();
         std::string folder;

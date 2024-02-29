@@ -163,6 +163,37 @@ namespace Engine {
 		configFile.close();
 	}
 
+	void ConfigLoader::SetString(const std::string section, const std::string key, const std::string value) const
+	{
+		// Update configData map with the new value
+		configData[section][key] = value;
+
+		// Open the config file for writing
+		std::ofstream configFile(file_path);
+
+		// Check if the file is opened successfully
+		if (!configFile.is_open())
+		{
+			// Handle error
+			std::cerr << "Error: Unable to open config file for writing\n";
+			return;
+		}
+
+		// Write the updated configData to the file
+		for (const auto& category : configData)
+		{
+			configFile << "[" << category.first << "]" << std::endl;
+			for (const auto& kvp : category.second)
+			{
+				configFile << kvp.first << "=" << kvp.second << std::endl;
+			}
+			configFile << std::endl;
+		}
+
+		// Close the file
+		configFile.close();
+	}
+
 	bool ConfigLoader::m_ParseConfig()
 	{
 		std::ifstream file(file_path);

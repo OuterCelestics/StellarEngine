@@ -35,9 +35,11 @@ namespace Engine
 
 	void Application::Run()
 	{
-		m_Input->BindAction(InputAction::FORWARD, []()
+		m_Input->BindAction("escape", [this]()
 		{
-			std::cout << "Forward" << std::endl;
+			glfwDestroyWindow(m_Window->getWindow());
+			glfwTerminate();
+			exit(0);
 		});
 
 		while (!glfwWindowShouldClose(m_Window->getWindow())) {

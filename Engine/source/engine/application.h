@@ -24,7 +24,7 @@ namespace Engine {
         ConfigLoader* config = nullptr;
     private:
         WindowManager* m_Window = nullptr;
-        InputEvent* m_Input = new InputEvent;
+        InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
 
         GraphicsAPIFactory factory;
         GraphicsAPI* api =  factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
