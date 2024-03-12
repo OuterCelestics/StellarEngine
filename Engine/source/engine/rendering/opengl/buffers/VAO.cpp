@@ -6,11 +6,16 @@ namespace Engine {
 		glGenVertexArrays(1, &ID);
 	}
 
-	void VAO::LinkVBO(VBO* VBO, unsigned int layout)
+	void VAO::LinkVBO(VBO* VBO)
 	{
 		VBO->Bind();
-		glVertexAttribPointer(layout, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glEnableVertexAttribArray(layout);
+		// Position attribute
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		// Texture coord attribute
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
 		VBO->Unbind();
 	}
 

@@ -10,7 +10,7 @@ namespace Engine {
 		unsigned int ID;
 		VAO();
 
-		void LinkVBO(VBO* VBO, unsigned int layout);
+		void LinkVBO(VBO* VBO);
 		void Bind();
 		void Unbind();
 		void Delete();

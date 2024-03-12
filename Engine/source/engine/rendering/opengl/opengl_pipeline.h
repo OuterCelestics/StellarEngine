@@ -13,6 +13,7 @@
 #include "buffers/VAO.h"
 #include "buffers/VBO.h"
 #include "../../components/config/config_loader.h"
+#include "../../rendering/opengl/textures/textures.h"
 
 namespace Engine
 {
@@ -29,7 +30,7 @@ namespace Engine
 		Shaders* shaderProgram = nullptr;
 		VAO* VAO1 = nullptr;
 		VBO* VBO1 = nullptr;
-
+		Texture texture1;
 	};
 
 }
