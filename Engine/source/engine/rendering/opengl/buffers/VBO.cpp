@@ -15,7 +15,7 @@ namespace Engine {
 
 	void VBO::Unbind()
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, ID);
 	}
 
 	void VBO::Delete()

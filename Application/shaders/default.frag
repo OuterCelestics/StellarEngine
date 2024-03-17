@@ -1,7 +1,7 @@
 #version 460 core
 out vec4 FragColor;
 
-in vec4 TextCoord;
+in vec2 TextCoord;
 
 // Texture sampler
 uniform sampler2D texture1;

@@ -26,7 +26,7 @@ namespace Engine {
 
 	void VAO::Unbind()
 	{
-		glBindVertexArray(0);
+		glBindVertexArray(ID);
 	}
 
 	void VAO::Delete()
