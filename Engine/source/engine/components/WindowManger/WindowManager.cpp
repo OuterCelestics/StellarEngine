@@ -9,12 +9,17 @@ namespace Engine
 	int* WindowManager::m_window_width = 0;
 	float* WindowManager::m_aspect_ratio = 0;
 
+	void error_Callback(int error, const char* description)
+	{
+		fprintf(stderr, "Error: %s\n", description);
+	}
+
 	WindowManager::WindowManager(int* width, int* height, float* aspect_ratio, const char* name, ConfigLoader* config)
 	{
 		m_window_height = height;
 		m_window_width = width;
 		m_aspect_ratio = aspect_ratio;
-
+		glfwSetErrorCallback(error_Callback);
 		// Set config
 		m_Config = config;
 		//Init GLFW
