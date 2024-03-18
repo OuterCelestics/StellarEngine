@@ -46,6 +46,8 @@ namespace Engine
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
+	//float* vertecesPtr = &vertices;
+
 	void OpenGLRenderPipeline::Initialize()
 	{
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -54,12 +56,13 @@ namespace Engine
 		}
 
 		shaderProgram = new Shaders("shaders/default.vs", "shaders/default.frag");
+
+		size_t size = sizeof(vertices) / sizeof(vertices[0]);
+
 		VAO1 = new VAO();
-
-		VBO1 = new VBO(vertices, sizeof(vertices));
-
+		VBO1 = new VBO();
 		VAO1->Bind();	
-		VAO1->LinkVBO(VBO1);
+		VAO1->LinkVBO(VBO1, vertices, size);
 		VAO1->Unbind();
 		VBO1->Unbind();
 		texture1.TextureInit();
