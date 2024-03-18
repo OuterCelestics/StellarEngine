@@ -19,7 +19,7 @@ void Texture::TextureInit()
 
 	std::filesystem::path cwd = std::filesystem::current_path();
 	std::cout << cwd << std::endl;
-	unsigned char* data = stbi_load("tom.jpg", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load("tom.jpg", &width, &height, &nrChannels, 3);
 	
 	if (data != nullptr)
 	{
@@ -35,5 +35,7 @@ void Texture::TextureInit()
 
 void Texture::Bind() 
 {
+	glActiveTexture(GL_TEXTURE0);
+	//std::cout << texture << std::endl;
 	glBindTexture(GL_TEXTURE_2D, texture);
 }
