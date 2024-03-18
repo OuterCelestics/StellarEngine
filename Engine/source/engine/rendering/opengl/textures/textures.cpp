@@ -19,7 +19,9 @@ void Texture::TextureInit()
 
 	std::filesystem::path cwd = std::filesystem::current_path();
 	std::cout << cwd << std::endl;
-	unsigned char* data = stbi_load("tom.jpg", &width, &height, &nrChannels, 3);
+
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load("tom.jpg", &width, &height, &nrChannels, 0);
 	
 	if (data != nullptr)
 	{

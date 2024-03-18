@@ -55,6 +55,8 @@ namespace Engine
 			std::cout << "Failed to initialize GLAD" << std::endl;
 		}
 
+		glEnable(GL_DEPTH_TEST);
+
 		shaderProgram = new Shaders("shaders/default.vs", "shaders/default.frag");
 
 		size_t size = sizeof(vertices) / sizeof(vertices[0]);
@@ -84,6 +86,7 @@ namespace Engine
 
 	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio)
 	{
+		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
@@ -100,6 +103,9 @@ namespace Engine
 		texture1.Bind();
 		VAO1->Bind();
 
+		glActiveTexture(GL_TEXTURE0);
+		texture1.Bind();
+
 		for (unsigned int i = 0; i < 10; i++)
 		{
 			// calculate the model matrix for each object and pass it to shader before drawing
@@ -115,7 +121,12 @@ namespace Engine
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
+
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		glActiveTexture(GL_TEXTURE0);
+
+		glUseProgram(0);
 	}
 
 	void OpenGLRenderPipeline::Terminate()
