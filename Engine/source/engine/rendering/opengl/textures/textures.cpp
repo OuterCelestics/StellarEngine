@@ -32,3 +32,8 @@ void Texture::TextureInit()
 	}
 	stbi_image_free(data);
 }
+
+void Texture::Bind() 
+{
+	glBindTexture(GL_TEXTURE_2D, texture);
+}
