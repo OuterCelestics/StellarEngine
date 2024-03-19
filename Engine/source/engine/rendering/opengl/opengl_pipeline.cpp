@@ -46,17 +46,18 @@ namespace Engine
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	//float* vertecesPtr = &vertices;
-
 	void OpenGLRenderPipeline::Initialize()
 	{
+		// Load gladGLAD
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
 			std::cout << "Failed to initialize GLAD" << std::endl;
 		}
 
+		// Enable depth test so we have proper ordening
 		glEnable(GL_DEPTH_TEST);
 
+		// Section
 		shaderProgram = new Shaders("shaders/default.vs", "shaders/default.frag");
 
 		size_t size = sizeof(vertices) / sizeof(vertices[0]);
@@ -67,7 +68,7 @@ namespace Engine
 		VAO1->LinkVBO(VBO1, vertices, size);
 		VAO1->Unbind();
 		VBO1->Unbind();
-		texture1.TextureInit();
+		textureID.TextureInit();
 
 	}
 
@@ -100,11 +101,11 @@ namespace Engine
 		shaderProgram->Activate();
 		shaderProgram->setMat4("projection", projection);
 		shaderProgram->setMat4("view", view);
-		texture1.Bind();
+		textureID.Bind();
 		VAO1->Bind();
 
 		glActiveTexture(GL_TEXTURE0);
-		texture1.Bind();
+		textureID.Bind();
 
 		for (unsigned int i = 0; i < 10; i++)
 		{

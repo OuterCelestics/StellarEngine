@@ -1,4 +1,4 @@
-// std
+#pragma once
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -10,16 +10,18 @@
 #include "components/config/config_loader.h"
 
 
-namespace Engine {
-
+namespace Engine 
+{
     using namespace Input;
 
-    class ENGINE_API Application {
+    class ENGINE_API Application 
+    {
     public:
         Application();
         virtual ~Application(); // Destructor to clean up allocated resources
 
         void Run();
+
     public: 
         ConfigLoader* config = nullptr;
     private:

@@ -1,6 +1,4 @@
-#ifndef OPENGL_PIPELINE_H
-#define OPENGL_PIPELINE_H
-
+#pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "glm.hpp" 
@@ -30,9 +28,7 @@ namespace Engine
 		Shaders* shaderProgram = nullptr;
 		VAO* VAO1 = nullptr;
 		VBO* VBO1 = nullptr;
-		Texture texture1;
+		Texture textureID;
 	};
 
 }
-
-#endif // !OPENGL_PIPELINE_H

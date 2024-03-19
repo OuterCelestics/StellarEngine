@@ -7,9 +7,9 @@ class Texture
 public:
 	void TextureInit();
 	void Bind();
-	unsigned int texture;
-
-	//Load the image, create the texure and generate mipmaps
+	unsigned int textureID;
+	
+	// Image properties
 	int width, height, nrChannels;
 };
 
