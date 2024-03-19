@@ -19,4 +19,4 @@ After downloading, place the premake5.exe into the "Scripts" folder. Next, execu
 
 
 ## Thanks to the following contributers
-@ZaroDev
+[ZaroDev](https://github.com/ZaroDev)
