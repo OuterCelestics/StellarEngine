@@ -15,6 +15,8 @@ group "Dependencies"
 
 group "Engine"
 	include "Engine/Build-Engine.lua"
+group "Components"
+   include "Components/ShaderCompileWorker/Build-ShaderCompileWorker.lua"
 group ""
 
 include "Application/Build-Application.lua"

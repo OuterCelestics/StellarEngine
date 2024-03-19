@@ -15,3 +15,4 @@ Makefile
 # Exclude
 !Vendor/Binaries
 Engine/source/glad.c
+*.rdc

@@ -1,9 +1,27 @@
 #include "WindowManager.h"
 #include <stdio.h>
+
 namespace Engine
 {
-	WindowManager::WindowManager(int width, int height, const char* name)
+	// Initialise static members
+	ConfigLoader* WindowManager::m_Config = nullptr;
+	int* WindowManager::m_window_height = 0;
+	int* WindowManager::m_window_width = 0;
+	float* WindowManager::m_aspect_ratio = 0;
+
+	void error_Callback(int error, const char* description)
 	{
+		fprintf(stderr, "Error: %s\n", description);
+	}
+
+	WindowManager::WindowManager(int* width, int* height, float* aspect_ratio, const char* name, ConfigLoader* config)
+	{
+		m_window_height = height;
+		m_window_width = width;
+		m_aspect_ratio = aspect_ratio;
+		glfwSetErrorCallback(error_Callback);
+		// Set config
+		m_Config = config;
 		//Init GLFW
 		glfwInit();
 		// uncomment for (borderless) fullscreen mode 
@@ -20,7 +38,7 @@ namespace Engine
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //Use core profile
 		//Create window
 		//GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, "OpenGLgamin", primary, NULL);
-		m_window = glfwCreateWindow(width, height, name, NULL, NULL);
+		m_window = glfwCreateWindow(*width, *height, name, NULL, NULL);
 	
 		if (m_window == NULL)
 		{
@@ -35,8 +53,13 @@ namespace Engine
 
 		glfwSwapInterval(0);
 	}
-	void WindowManager::Terminate()
+	void WindowManager::Terminate(ConfigLoader* config)
 	{
+		// Write the final window dimentsions to the config file
+		config->SetInt("general", "window_height", *m_window_height);
+		config->SetInt("general", "window_width", *m_window_width);
+		config->SetFloat ("general", "window_aspect_ratio", *m_aspect_ratio);
+
 		glfwTerminate();
 		glfwDestroyWindow(m_window);
 	}
@@ -44,9 +67,24 @@ namespace Engine
 	// Callbacks
 	void WindowManager::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
-		float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		if (m_Config != nullptr) {
+			*m_window_height = height;
+			*m_window_width = width;
+			*m_aspect_ratio = (float)width / (float)height;
 
+			int maximized = glfwGetWindowAttrib(window, GLFW_MAXIMIZED);
+
+			if (maximized == GLFW_TRUE) {
+				m_Config->SetInt("general", "window_maximized", 1);
+			} 
+			else {
+				m_Config->SetInt("general", "window_maximized", 0);
+			}
+		}
+		else {
+			printf("Config is null");
+			glfwSetWindowAspectRatio(window, width, height);
+		}
 		glViewport(0, 0, width, height);
-		glfwSetWindowAspectRatio(window, width, height);
 	}
 }

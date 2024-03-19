@@ -7,8 +7,8 @@ namespace Engine {
 	class VBO {
 	public:
 		unsigned int  ID;
-		VBO(float* vertices, size_t size);
-		void Bind();
+		VBO();
+		void Bind(float* vertices, size_t size);
 		void Unbind();
 		void Delete();
 

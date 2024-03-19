@@ -1,7 +1,11 @@
 #version 460 core
 out vec4 FragColor;
 
-void main()
-{
-    FragColor = vec4(0.0f, 0.0f, 1.0f, 1.0f);
+in vec2 TextCoord;
+
+// Texture sampler
+uniform layout(location = 0) sampler2D texture1;
+
+void main() {
+    FragColor = texture(texture1, TextCoord);
 }

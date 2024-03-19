@@ -7,6 +7,8 @@
 #include "components/input/input.h"
 #include "rendering/layer.h"
 #include "components/WindowManger/WindowManager.h"
+#include "components/config/config_loader.h"
+
 
 namespace Engine {
 
@@ -18,13 +20,17 @@ namespace Engine {
         virtual ~Application(); // Destructor to clean up allocated resources
 
         void Run();
+    public: 
+        ConfigLoader* config = nullptr;
     private:
-        WindowManager* m_Window = new WindowManager(900, 800, "StellarEngine");
-        
-        InputEvent* m_Input = new InputEvent;
+        WindowManager* m_Window = nullptr;
+        InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
 
         GraphicsAPIFactory factory;
-        GraphicsAPI* api = factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
+        GraphicsAPI* api =  factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
+        int m_window_height;
+        int m_window_width;
+        float m_aspect_ratio;
     };
 
     // To be defined in CLIENT

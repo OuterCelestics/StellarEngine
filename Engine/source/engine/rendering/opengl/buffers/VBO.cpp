@@ -1,21 +1,20 @@
 #include "VBO.h"
 
 namespace Engine {
-	VBO::VBO(float* vertices, size_t size)
+	VBO::VBO()
 	{
 		glGenBuffers(1, &ID);
-		glBindBuffer(GL_ARRAY_BUFFER, ID);
-		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
 	}
 
-	void VBO::Bind()
+	void VBO::Bind(float* vertices, size_t size)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, ID);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * size, vertices, GL_STATIC_DRAW);
 	}
 
 	void VBO::Unbind()
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, ID);
 	}
 
 	void VBO::Delete()

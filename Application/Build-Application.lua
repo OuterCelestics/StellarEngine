@@ -17,7 +17,9 @@ project "Application"
 	    "../Engine/source",
         "$(SolutionDir)Submodules/GLFW/include",
         "$(SolutionDir)Dependencies/Glad/include",
-        "$(SolutionDir)Submodules/ImGui/"
+        "$(SolutionDir)Dependencies/glm",
+        "$(SolutionDir)Submodules/ImGui/",
+        "$(SolutionDir)Dependencies/stb"
     }
 
     sysincludedirs {
