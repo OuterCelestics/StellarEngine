@@ -99,14 +99,17 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	std::vector<GLubyte> binary(length);
+	std::vector<char> binary(length);
 	GLenum format;
 	glGetProgramBinary(program, length, NULL, &format, binary.data());
 
-	std::cout << "binary size: " << binary.size() << std::endl;
+	// Convert the char vector to a GLubyte vector
+	std::vector<GLubyte> binaryGLubyte(binary.begin(), binary.end());
+
+	std::cout << "binary size: " << binaryGLubyte.size() << std::endl;
 
 	if (accesor->initialize()) {
-		accesor->write((const char*)binary.data(), config->GetInteger("general", "delay"));
+		accesor->write(binaryGLubyte, config->GetInteger("general", "delay"));
 		std::cout << "Binary written!" << std::endl;
 	}
 

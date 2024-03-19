@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 #include <iostream>
+#include <vector>
+#include <glad/glad.h>
 
 class Accesor {
 public:
@@ -11,5 +13,5 @@ public:
 	LPCTSTR pBuf;
 
 	bool initialize();
-	void write(const char* data, int delay);
+	void write(std::vector<GLubyte>, int delay);
 };

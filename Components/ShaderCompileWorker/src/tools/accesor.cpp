@@ -35,9 +35,9 @@ bool Accesor::initialize()
 	}
 }
 
-void Accesor::write(const char* data, int delay)
+void Accesor::write(std::vector<GLubyte> data, int delay)
 {
-	if (CopyMemory((PVOID)pBuf, data, (strlen(data) * sizeof(char)))) {
+	if (CopyMemory((PVOID)pBuf, data.data(), data.size() * sizeof(GLubyte))) {
 		std::cout << "Data written to the file mapping object" << std::endl;
 	}
 	else {
