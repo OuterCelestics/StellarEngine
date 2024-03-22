@@ -2,72 +2,84 @@
 #include <iostream>
 #include <Windows.h>
 #include <glad/glad.h>
+
 using namespace std;
+
+#define SHARED_MEM_NAME L"shader_shared_mem"
+#define SHARED_MEM_SIZE 12288
 
 class Source : public Engine::Application
 {
+private:
+    bool loadShaderBinary(GLuint program) {
+        // Open shared memory
+        HANDLE hMapFile = OpenFileMapping(FILE_MAP_READ, FALSE, SHARED_MEM_NAME);
+        if (hMapFile == NULL) {
+            std::cerr << "Failed to open file mapping object: " << GetLastError() << std::endl;
+            return false;
+        }
+
+        // Map shared memory into the address space of the process
+        LPVOID shared_memory = MapViewOfFile(hMapFile, FILE_MAP_READ, 0, 0, SHARED_MEM_SIZE);
+        if (shared_memory == NULL) {
+            std::cerr << "Failed to map view of file: " << GetLastError() << std::endl;
+            CloseHandle(hMapFile);
+            return false;
+        }
+
+        // Read binary data from shared memory
+        GLint length = 0;
+        glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH, &length);
+
+        GLint formats = 0;
+        glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
+        if (formats < 1) {
+            std::cerr << "Driver does not support any binary formats." << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
+        // Read binary data from shared memory
+        std::vector<char> buffer(sizeof(shared_memory));
+        GLenum format = 0;
+
+       // Install shader binary
+        glProgramBinary(program, format, buffer.data(), buffer.size());
+
+        std::cout << "length: " << length << " format: " << format << std::endl;
+        // Unmap shared memory
+        UnmapViewOfFile(shared_memory);
+        CloseHandle(hMapFile);
+
+        // Check for success/failure
+        GLint status;
+        glGetProgramiv(program, GL_LINK_STATUS, &status);
+        if (GL_FALSE == status) {
+            std::cerr << "Failed to link shader program from binary." << std::endl;
+            return false;
+        }
+
+        return true;
+    }
+
 public:
 	Source() : Application()
 	{
-        HANDLE hMapFile;
-        LPVOID pBuf;
+        if (gladLoadGL())
+        {
+            GLuint program = glCreateProgram();
+			std::cout << "OpenGL loaded successfully" << std::endl;
 
-        // Open the file mapping
-        hMapFile = OpenFileMapping(
-            FILE_MAP_READ,
-            FALSE,
-            L"shader_hot_reload_address");
-
-        if (hMapFile == NULL) {
-            cerr << "Could not open file mapping object (" << GetLastError() << ")." << endl;
-        }
-
-        // Map the shared memory into the process's address space
-        pBuf = MapViewOfFile(
-            hMapFile,
-            FILE_MAP_READ,
-            0,
-            0,
-            0); // Let the function determine the size of the memory region
-
-        if (pBuf == NULL) {
-            cerr << "Could not map view of file (" << GetLastError() << ")." << endl;
-
-            CloseHandle(hMapFile);
-        }
-
-        // Get the size of the memory region pointed to by pBuf
-        MEMORY_BASIC_INFORMATION memInfo;
-        if (VirtualQuery(pBuf, &memInfo, sizeof(memInfo)) == 0) {
-            cerr << "VirtualQuery failed (" << GetLastError() << ")." << endl;
-
-            UnmapViewOfFile(pBuf);
-            CloseHandle(hMapFile);
-        }
-
-        // Actual size of the memory region
-        SIZE_T dataSize = memInfo.RegionSize;
-
-        gladLoadGL(); // Load the OpenGL functions
-        // Example: Assuming glProgramBinary() is used to set the binary shader data
-        GLenum binaryFormat;
-        GLuint programID = glCreateProgram();
-        // Set the binary data to the program object
-        glProgramBinary(programID, binaryFormat, static_cast<const void*>(pBuf), dataSize);
-        GLint success;
-        char infoLog[512];
-        glGetProgramiv(programID, GL_LINK_STATUS, &success);
-        if (!success) {
-            glGetProgramInfoLog(programID, 512, nullptr, infoLog);
-            std::cerr << "Failed to link program: " << infoLog << std::endl;
-        }
-
-        // Unmap the shared memory
-        UnmapViewOfFile(pBuf);
-
-        // Close the file mapping handle
-        CloseHandle(hMapFile);
-
+            if (!loadShaderBinary(program)) {
+                std::cerr << "Failed to load shader program from shared memory" << std::endl;
+            }
+            else {
+                std::cout << "Shader program loaded successfully" << std::endl;
+            }
+		}
+        else
+        {
+			std::cerr << "Failed to load OpenGL" << std::endl;
+		}
 	}
 
 	~Source()

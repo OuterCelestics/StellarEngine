@@ -1,123 +1,142 @@
+#include <iostream>
+#include <Windows.h>
 #include <vector>
 #include <fstream>
-#include <sstream>
-#include <iostream>
 #include <glad/glad.h>
 
 #include "tools/context.h"
-#include "tools/accesor.h"
-#include "tools/config.h"
+
+#define SHARED_MEM_NAME L"shader_shared_mem"
+#define SHARED_MEM_SIZE 12288
 
 std::string read_file(const std::string& filePath) {
-	std::ifstream file(filePath);
-	std::stringstream buffer;
-	buffer << file.rdbuf();
-	return buffer.str();
+    std::ifstream file(filePath, std::ios::binary);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filePath << std::endl;
+        return "";
+    }
+
+    file.seekg(0, std::ios::end);
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::string buffer(size, '\0');
+    file.read(&buffer[0], size);
+    file.close();
+
+    return buffer;
 }
 
 GLuint compileShader(const char* shader_path, GLenum shader_type) {
-	GLuint shader = glCreateShader(shader_type);
+    GLuint shader = glCreateShader(shader_type);
 
-	std::string shader_code = read_file(shader_path);
-	const char* shader_code_array[] = { shader_code.c_str() };
+    std::string shader_code = read_file(shader_path);
+    const char* shader_code_array[] = { shader_code.c_str() };
 
-	glShaderSource(shader, 1, shader_code_array, NULL);
-	glCompileShader(shader);
+    glShaderSource(shader, 1, shader_code_array, NULL);
+    glCompileShader(shader);
 
-	// Check for shader compile errors
-	int success;
-	char infoLog[512];
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cerr << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
-		return -1;
-	}
-	return shader;
+    // Check for shader compile errors
+    int success;
+    char infoLog[512];
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(shader, 512, NULL, infoLog);
+        std::cerr << "ERROR::SHADER::COMPILATION_FAILED\n" << infoLog << std::endl;
+        return 0;
+    }
+    return shader;
 }
 
 int main(int argc, char* argv[]) {
-	Context* context = new Context();
+    // Initialize OpenGL context
+    // (Make sure to have a valid OpenGL context before calling any OpenGL functions)
+    // ...
 
-	Accesor* accesor = new Accesor();
-	Config* config = new Config("config", "scw.ini");
-	context->initialize();
+    Context* context = new Context();
+    context->initialize();
+    if (gladLoadGL() == 0) {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        return -1;
+    }
 
-	accesor->buffer_size = config->GetInteger("general", "buffer_size");
+    if (argc != 3) {
+        std::cerr << "Usage: ShaderCompileWorker <vertex_shader> <fragment_shader>\n" << std::endl;
+        std::cerr << "Example: ShaderCompileWorker shader.vert fragment.frag\n" << std::endl;
+        return -1;
+    }
 
-	if (!gladLoadGL()) {
-		std::cerr << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
+    // Compile vertex shader
+    GLuint vertex_shader = compileShader(argv[1], GL_VERTEX_SHADER);
+    if (!vertex_shader) {
+        std::cerr << "Error during vertex shader compilation" << std::endl;
+        return -1;
+    }
 
-	if (argc != 3) {
-		std::cerr << "Usage: ShaderCompileWorker <vertex_shader> <fragment_shader>\n" << std::endl;
-		std::cerr << "Example: ShaderCompileWorker shader.vert fragment.frag\n" << std::endl;
-		return -1;
-	}
+    // Compile fragment shader
+    GLuint fragment_shader = compileShader(argv[2], GL_FRAGMENT_SHADER);
+    if (!fragment_shader) {
+        std::cerr << "Error during fragment shader compilation" << std::endl;
+        return -1;
+    }
 
-	// Compile vertex shader
-	GLuint vertex_shader = compileShader(argv[1], GL_VERTEX_SHADER);
-	if (vertex_shader == 0) {
-		glDeleteShader(vertex_shader);
-		return 1; // Error during vertex shader compilation
-	}
+    GLuint program = glCreateProgram();
+    glAttachShader(program, vertex_shader);
+    glAttachShader(program, fragment_shader);
+    glLinkProgram(program);
 
-	// Compile fragment shader
-	GLuint fragment_shader = compileShader(argv[2], GL_FRAGMENT_SHADER);
-	if (fragment_shader == 0) {
-		glDeleteShader(fragment_shader);
-		return 1; // Error during fragment shader compilation
-	}
+    GLint formats = 0;
+    glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
+    if (formats < 1) {
+        std::cerr << "Driver does not support any binary formats." << std::endl;
+        return false;
+    }
 
-	GLuint program = glCreateProgram();
-	glAttachShader(program, vertex_shader);
-	glAttachShader(program, fragment_shader);
-	glLinkProgram(program);
+    // Get the binary length
+    GLint length = 0;
+    glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH, &length);
 
-	// Check for linking errors
-	int success;
-	char infoLog[512];
-	glGetProgramiv(program, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(program, 512, NULL, infoLog);
-		std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-		return -1;
-	}
+    // Retrieve the binary code
+    std::vector<GLubyte> buffer(length);
+    GLenum format = 0;
+    glGetProgramBinary(program, length, NULL, &format, buffer.data());
 
-	int length = 0;
-	glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH, &length);
-	if (length < 1) {
-		std::cerr << "No binary length available" << std::endl;
-		return -1;
-	}
+    // Create or open shared memory
+    HANDLE hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, length, SHARED_MEM_NAME);
+    if (hMapFile == NULL) {
+        std::cerr << "Failed to create file mapping object: " << GetLastError() << std::endl;
+        return false;
+    }
 
-	int formats = 0;
-	glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
-	if (formats < 1) {
-		std::cerr << "No binary formats available" << std::endl;
-		return -1;
-	}
+    // Map shared memory into the address space of the process
+    LPVOID shared_memory = MapViewOfFile(hMapFile, FILE_MAP_WRITE, 0, 0, length);
+    if (shared_memory == NULL) {
+        std::cerr << "Failed to map view of file: " << GetLastError() << std::endl;
+        CloseHandle(hMapFile);
+        return false;
+    }
 
-	std::vector<char> binary(length);
-	GLenum format;
-	glGetProgramBinary(program, length, NULL, &format, binary.data());
+    std::cout << "length: " << length << std::endl;
+    std::cout << "Binary format: " << format << std::endl;
 
-	// Convert the char vector to a GLubyte vector
-	std::vector<GLubyte> binaryGLubyte(binary.begin(), binary.end());
+    // Copy the binary data to shared memory
+    std::memcpy(shared_memory, buffer.data(), length);
+    std::cout << "Shader binary copied to shared memory" << std::endl;
+    
+    Sleep(50000);
+    std::cout << "ShaderCompileWorker finished" << std::endl;
+    // Unmap shared memory
+    UnmapViewOfFile(shared_memory);
 
-	std::cout << "binary size: " << binaryGLubyte.size() << std::endl;
+    // Close shared memory handle
+    CloseHandle(hMapFile);
 
-	if (accesor->initialize()) {
-		accesor->write(binaryGLubyte, config->GetInteger("general", "delay"));
-		std::cout << "Binary written!" << std::endl;
-	}
+    // Clean up OpenGL resources
+    glDetachShader(program, vertex_shader);
+    glDetachShader(program, fragment_shader);
+    glDeleteShader(vertex_shader);
+    glDeleteShader(fragment_shader);
+    glDeleteProgram(program);
 
-	glDetachShader(program, vertex_shader);
-	glDetachShader(program, fragment_shader);
-	glDeleteShader(vertex_shader);
-	glDeleteShader(fragment_shader);
-	glDeleteProgram(program);
-
-	return 0;
+    return 0;
 }
