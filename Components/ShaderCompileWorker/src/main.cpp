@@ -66,6 +66,8 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+
+    GLuint program = glCreateProgram();
     // Compile vertex shader
     GLuint vertex_shader = compileShader(argv[1], GL_VERTEX_SHADER);
     if (!vertex_shader) {
@@ -80,10 +82,25 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    GLuint program = glCreateProgram();
+    // Attach the shaders to the program
     glAttachShader(program, vertex_shader);
     glAttachShader(program, fragment_shader);
+
+    // Link the program
     glLinkProgram(program);
+
+    // Check if the program linked successfully
+    GLint success;
+    char infoLog[512];
+    glGetProgramiv(program, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(program, 512, nullptr, infoLog);
+        std::cerr << "Failed to link program: " << infoLog << std::endl;
+        glDeleteShader(vertex_shader);
+        glDeleteShader(fragment_shader);
+        glDeleteProgram(program);
+        return 1;
+    }
 
     GLint formats = 0;
     glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
@@ -92,51 +109,17 @@ int main(int argc, char* argv[]) {
         return false;
     }
 
-    // Get the binary length
     GLint length = 0;
+
     glGetProgramiv(program, GL_PROGRAM_BINARY_LENGTH, &length);
 
-    // Retrieve the binary code
     std::vector<GLubyte> buffer(length);
     GLenum format = 0;
     glGetProgramBinary(program, length, NULL, &format, buffer.data());
 
-    // Create or open shared memory
-    HANDLE hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, length, SHARED_MEM_NAME);
-    if (hMapFile == NULL) {
-        std::cerr << "Failed to create file mapping object: " << GetLastError() << std::endl;
-        return false;
-    }
-
-    // Map shared memory into the address space of the process
-    LPVOID shared_memory = MapViewOfFile(hMapFile, FILE_MAP_WRITE, 0, 0, length);
-    if (shared_memory == NULL) {
-        std::cerr << "Failed to map view of file: " << GetLastError() << std::endl;
-        CloseHandle(hMapFile);
-        return false;
-    }
-
-    std::cout << "length: " << length << std::endl;
-    std::cout << "Binary format: " << format << std::endl;
-
-    // Copy the binary data to shared memory
-    std::memcpy(shared_memory, buffer.data(), length);
-    std::cout << "Shader binary copied to shared memory" << std::endl;
-    
-    Sleep(50000);
-    std::cout << "ShaderCompileWorker finished" << std::endl;
-    // Unmap shared memory
-    UnmapViewOfFile(shared_memory);
-
-    // Close shared memory handle
-    CloseHandle(hMapFile);
-
-    // Clean up OpenGL resources
-    glDetachShader(program, vertex_shader);
-    glDetachShader(program, fragment_shader);
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
-    glDeleteProgram(program);
-
-    return 0;
+    std::string fName("shader.bin");
+    std::cout << "Writing to " << fName << ", binary format = " << format << std::endl;
+    std::ofstream out(fName.c_str(), std::ios::binary);
+    out.write(reinterpret_cast<char*>(buffer.data()), length);
+    out.close();
 }
