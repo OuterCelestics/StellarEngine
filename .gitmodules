@@ -4,4 +4,4 @@
 
 [submodule "Submodules/GLFW"]
 	path = Submodules/GLFW
-	url = https://github.com/Lukevdb01/glfw.git
+	url = https://github.com/OuterCelestics/glfw.git
