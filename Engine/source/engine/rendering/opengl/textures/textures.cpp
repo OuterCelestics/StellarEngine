@@ -24,7 +24,7 @@ void Texture::TextureInit()
 	stbi_set_flip_vertically_on_load(true);
 
 	// Load the texture using stb_load
-	unsigned char* data = stbi_load("tom.jpg", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load("textures/cat.png", &width, &height, &nrChannels, 0);
 	
 	// Check if the texure is laoded properly ( Check if data contains some stuff)
 	if (data != nullptr)
