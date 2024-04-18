@@ -16,7 +16,8 @@ namespace Engine
 
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
 
-		if (config->GetInteger("general", "window_maximized") == GLFW_TRUE) {
+		if (config->GetInteger("general", "window_maximized") == GLFW_TRUE) 
+		{
 			glfwMaximizeWindow(m_Window->getWindow());
 		}
 		else {

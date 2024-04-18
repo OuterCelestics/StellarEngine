@@ -1,10 +1,9 @@
-#ifndef VBO_CLASS_H
-#define VBO_CLASS_H
-
+#pragma once
 #include <glad/glad.h>
 
 namespace Engine {
-	class VBO {
+	class VBO 
+	{
 	public:
 		unsigned int  ID;
 		VBO();
@@ -15,5 +14,3 @@ namespace Engine {
 	private:
 	};
 }
-
-#endif // !VBO_CLASS_H

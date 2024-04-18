@@ -1,11 +1,9 @@
+#pragma once
 #include <map>
 #include <functional>
 #include <string>
 #include <GLFW/glfw3.h>
 #include "../config/config_loader.h"
-
-#ifndef INPUT_CLASS_H
-#define INPUT_CLASS_H
 
 namespace Engine::Input {
 	class InputEvent {
@@ -24,5 +22,3 @@ namespace Engine::Input {
 		ConfigLoader* config = nullptr;
 	};
 }
-
-#endif // !INPUT_CLASS_H

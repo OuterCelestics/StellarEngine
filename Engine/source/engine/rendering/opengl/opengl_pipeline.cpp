@@ -46,17 +46,20 @@ namespace Engine
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	//float* vertecesPtr = &vertices;
-
 	void OpenGLRenderPipeline::Initialize()
 	{
+		// Load gladGLAD
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
 			std::cout << "Failed to initialize GLAD" << std::endl;
 		}
+		
+		glm::vec3 camera = glm::vec3(0, 0, 0);
 
+		// Enable depth test so we have proper ordening
 		glEnable(GL_DEPTH_TEST);
 
+		// Section
 		shaderProgram = new Shaders("shaders/default.vs", "shaders/default.frag");
 
 		size_t size = sizeof(vertices) / sizeof(vertices[0]);
@@ -67,8 +70,7 @@ namespace Engine
 		VAO1->LinkVBO(VBO1, vertices, size);
 		VAO1->Unbind();
 		VBO1->Unbind();
-		texture1.TextureInit();
-
+		textureID.TextureInit();
 	}
 
 	glm::vec3 cubePositions[] = {
@@ -91,20 +93,32 @@ namespace Engine
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		// create transformations
-		//glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+		//glm::mat4 model = glm::mat4(1.0f);
+		// make sure to initialize matrix to identity matrix first
 		glm::mat4 view = glm::mat4(1.0f);
+		float radius = 10.0f;
 		glm::mat4 projection = glm::mat4(1.0f);
+
+		float camX = static_cast<float>(sin(glfwGetTime()) * radius);
+		float camZ = static_cast<float>(cos(glfwGetTime()) * radius);
+
+		//std::cout << "camX: " << camX << "camZ" << camZ << std::endl;
+
+		// Simple projection
 		projection = glm::perspective(glm::radians(45.0f), *aspect_ratio, 0.1f, 100.0f);
+
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
+		//Camera projection
+		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		shaderProgram->Activate();
 		shaderProgram->setMat4("projection", projection);
 		shaderProgram->setMat4("view", view);
-		texture1.Bind();
+		textureID.Bind();
 		VAO1->Bind();
 
 		glActiveTexture(GL_TEXTURE0);
-		texture1.Bind();
+		textureID.Bind();
 
 		for (unsigned int i = 0; i < 10; i++)
 		{

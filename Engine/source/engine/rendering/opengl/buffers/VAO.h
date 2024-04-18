@@ -1,6 +1,4 @@
-#ifndef VAO_CLASS_H
-#define VAO_CLASS_H
-
+#pragma once
 #include <glad/glad.h>
 #include "VBO.h"
 
@@ -17,5 +15,3 @@ namespace Engine {
 	private:
 	};
 }
-
-#endif // !BUFFER_CLASS_H
