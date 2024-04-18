@@ -110,7 +110,7 @@ namespace Engine
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 		//Camera projection
-	//	view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		shaderProgram->Activate();
 		shaderProgram->setMat4("projection", projection);
 		shaderProgram->setMat4("view", view);
