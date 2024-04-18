@@ -23,7 +23,7 @@ namespace Engine
 		else {
 			config->SetInt("general", "window_maximized", 0);
 		}
-
+		
 		api->Initialize();
 	}
 

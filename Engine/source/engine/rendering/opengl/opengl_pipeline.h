@@ -23,12 +23,14 @@ namespace Engine
 		void Render(ConfigLoader* config, float* aspect_ratio) override;
 
 		void Terminate() override;
-
 	private:
-		Shaders* shaderProgram = nullptr;
 		VAO* VAO1 = nullptr;
 		VBO* VBO1 = nullptr;
 		Texture textureID;
+		Shaders* shaderProgram = nullptr;
+
+		// Inherited via GraphicsAPI
+		Shaders* getShaderProgram() override;
 	};
 
 }

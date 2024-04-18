@@ -60,7 +60,8 @@ namespace Engine
 		glEnable(GL_DEPTH_TEST);
 
 		// Section
-		shaderProgram = new Shaders("shaders/default.vs", "shaders/default.frag");
+		shaderProgram = new Shaders;
+		shaderProgram->Compile("shaders/default.vs", "shaders/default.frag");
 
 		size_t size = sizeof(vertices) / sizeof(vertices[0]);
 
@@ -146,5 +147,19 @@ namespace Engine
 	void OpenGLRenderPipeline::Terminate()
 	{
 		
+	}
+
+	Shaders* OpenGLRenderPipeline::getShaderProgram()
+	{
+		if (shaderProgram != nullptr) 
+		{
+			std::cout << "Shader program is not null" << std::endl;
+			return shaderProgram;
+		}
+		else
+		{
+			std::cout << "Shader program is null" << std::endl;
+			return nullptr;
+		}			
 	}
 }

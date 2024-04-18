@@ -9,19 +9,20 @@
 #include<cerrno>
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
+#include "../../../core.h"
 
 namespace Engine {
-	class Shaders {
+	class ENGINE_API Shaders {
 	public:
 		GLuint ID;
-		Shaders(const GLchar* vertexPath, const GLchar* fragmentPath);
+		void Compile(const GLchar* vertexPath, const GLchar* fragmentPath);
 		void Activate();
 		void Delete();
+		void DetachShader();
 		// utility uniform functions
 		void setBool(const std::string& name, bool value) const;
 		void setInt(const std::string& name, int value) const;
 		void setFloat(const std::string& name, float value) const;
-
 		// Vec2
 		void setVec2(const std::string& name, const glm::vec2& value) const;
 		void setVec2(const std::string& name, float x, float y) const;
@@ -42,6 +43,7 @@ namespace Engine {
 
 		// Mat4
 		void setMat4(const std::string& name, const glm::mat4& mat) const;
+
 	private:
 		std::string get_file_contents(const char* filename);
 	private:

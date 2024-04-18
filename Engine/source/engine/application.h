@@ -29,7 +29,9 @@ namespace Engine
         InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
 
         GraphicsAPIFactory factory;
+    public:
         GraphicsAPI* api =  factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
+    private:
         int m_window_height;
         int m_window_width;
         float m_aspect_ratio;

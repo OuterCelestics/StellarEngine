@@ -1,7 +1,7 @@
 #include "shaderClass.h"
 
 namespace Engine {
-	Shaders::Shaders(const GLchar* vertexPath, const GLchar* fragmentPath)
+	void Shaders::Compile(const GLchar* vertexPath, const GLchar* fragmentPath)
 	{
 		std::string vertexCode = get_file_contents(vertexPath);
 		std::string fragmentCode = get_file_contents(fragmentPath);
@@ -34,6 +34,14 @@ namespace Engine {
 	void Shaders::Delete()
 	{
 		glDeleteProgram(ID);
+	}
+
+	void Shaders::DetachShader()
+	{
+		glDetachShader(ID, vertex);
+		glDetachShader(ID, fragment);
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
 	}
 
 	std::string Shaders::get_file_contents(const char* filename)
