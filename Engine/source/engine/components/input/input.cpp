@@ -28,7 +28,6 @@ namespace Engine::Input {
 
 	int InputEvent::GetKeyState(std::string value)
 	{
-		std::cout << value << std::endl;
 		if (value == "esc") {
 			return GLFW_KEY_ESCAPE;
 		}
