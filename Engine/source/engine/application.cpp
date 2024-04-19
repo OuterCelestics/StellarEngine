@@ -1,4 +1,5 @@
 #include "application.h"
+#include "iostream"
 
 namespace Engine 
 {
@@ -25,6 +26,33 @@ namespace Engine
 		}
 		
 		api->Initialize();
+
+		m_Input->BindAction("escape", [this]()
+		{
+			glfwDestroyWindow(m_Window->getWindow());
+			glfwTerminate();
+			exit(0);
+		});
+		
+		m_Input->BindAction("forward", [this]()
+		{
+			std::cout << "w pressed" << std::endl;
+		});
+		
+		m_Input->BindAction("right", [this]()
+		{
+			std::cout << "d pressed" << std::endl;
+		});
+
+		m_Input->BindAction("left", [this]()
+		{
+			std::cout << "a pressed" << std::endl;
+		});
+		
+		m_Input->BindAction("backwards", [this]()
+		{
+			std::cout << "s pressed" << std::endl;
+		});
 	}
 
 	// Termination of the application
@@ -36,13 +64,6 @@ namespace Engine
 
 	void Application::Run()
 	{
-		m_Input->BindAction("escape", [this]()
-		{
-			glfwDestroyWindow(m_Window->getWindow());
-			glfwTerminate();
-			exit(0);
-		});
-
 		while (!glfwWindowShouldClose(m_Window->getWindow())) {
 			// process input
 			m_Input->processInput(m_Window->getWindow());
