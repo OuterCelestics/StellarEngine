@@ -69,7 +69,7 @@ namespace Engine
 			m_Input->processInput(m_Window->getWindow());
 
 			// render
-			api->Render(config, &m_aspect_ratio);
+			api->Render(config, &m_aspect_ratio, &m_MainCamera);
 
 			// Swap front and back buffers
 			glfwSwapBuffers(m_Window->getWindow());

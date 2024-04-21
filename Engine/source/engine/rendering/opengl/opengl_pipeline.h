@@ -20,7 +20,7 @@ namespace Engine
 	public:
 		void Initialize() override;
 
-		void Render(ConfigLoader* config, float* aspect_ratio) override;
+		void Render(ConfigLoader* config, float* aspect_ratio, Camera* camera) override;
 
 		void Terminate() override;
 	private:

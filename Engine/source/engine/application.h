@@ -8,7 +8,7 @@
 #include "rendering/layer.h"
 #include "components/WindowManger/WindowManager.h"
 #include "components/config/config_loader.h"
-//#include "components/camera/camera.h"
+#include "components/camera/camera.h"
 
 
 namespace Engine 
@@ -28,6 +28,7 @@ namespace Engine
     private:
         WindowManager* m_Window = nullptr;
         InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
+        Camera m_MainCamera;
 
         GraphicsAPIFactory factory;
     public:

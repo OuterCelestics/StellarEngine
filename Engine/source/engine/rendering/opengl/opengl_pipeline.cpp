@@ -92,7 +92,7 @@ namespace Engine
 //	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 //	glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 	
-	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio)
+	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio, Camera* camera)
 	{
 		
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -121,7 +121,7 @@ namespace Engine
 		//	view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		
 		// Walk around cam
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		view = glm::lookAt(camera->cameraPos, camera->cameraPos + camera->cameraFront, camera->cameraUp);
 
 		shaderProgram->Activate();
 		shaderProgram->setMat4("projection", projection);

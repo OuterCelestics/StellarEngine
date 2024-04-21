@@ -1,4 +1,5 @@
 #include "../components/config/config_loader.h"
+#include "../components/camera/camera.h"
 #include "opengl/shaders/shaderClass.h"
 
 using namespace Engine;
@@ -6,7 +7,7 @@ using namespace Engine;
 class GraphicsAPI {
 public:
     virtual void Initialize() = 0;
-    virtual void Render(ConfigLoader* config, float* aspect_ratio) = 0;
+    virtual void Render(ConfigLoader* config, float* aspect_ratio, Camera* camera) = 0;
     virtual void Terminate() = 0;
     virtual Shaders* getShaderProgram() = 0;
 };
