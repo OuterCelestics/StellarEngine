@@ -1,6 +1,7 @@
 #include "input.h"
 
 namespace Engine::Input {
+
 	InputEvent::InputEvent(std::string folder, std::string file)
 	{
 		config = new ConfigLoader(folder, file);

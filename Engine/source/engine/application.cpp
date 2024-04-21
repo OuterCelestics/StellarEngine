@@ -36,22 +36,22 @@ namespace Engine
 		
 		m_Input->BindAction("forward", [this]()
 		{
-			std::cout << "w pressed" << std::endl;
-		});
-		
-		m_Input->BindAction("right", [this]()
-		{
-			std::cout << "d pressed" << std::endl;
-		});
-
-		m_Input->BindAction("left", [this]()
-		{
-			std::cout << "a pressed" << std::endl;
+				m_MainCamera.cameraPos += cameraSpeed * m_MainCamera.cameraFront;
 		});
 		
 		m_Input->BindAction("backwards", [this]()
 		{
-			std::cout << "s pressed" << std::endl;
+				m_MainCamera.cameraPos -= cameraSpeed + m_MainCamera.cameraFront;
+		});
+
+		m_Input->BindAction("left", [this]()
+		{
+				m_MainCamera.cameraPos -= glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp) * cameraSpeed);
+		});
+		
+		m_Input->BindAction("right", [this]()
+		{
+				m_MainCamera.cameraPos += glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp) * cameraSpeed);
 		});
 	}
 
