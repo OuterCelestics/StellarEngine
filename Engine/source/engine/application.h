@@ -8,6 +8,7 @@
 #include "rendering/layer.h"
 #include "components/WindowManger/WindowManager.h"
 #include "components/config/config_loader.h"
+//#include "components/camera/camera.h"
 
 
 namespace Engine 

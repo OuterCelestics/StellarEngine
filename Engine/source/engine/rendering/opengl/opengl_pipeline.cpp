@@ -1,4 +1,5 @@
 #include "opengl_pipeline.h"
+#include "../../components/camera/camera.h"
 
 namespace Engine
 {
@@ -87,6 +88,10 @@ namespace Engine
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
+//	glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+//	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+//	glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+	
 	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio)
 	{
 		
@@ -108,10 +113,16 @@ namespace Engine
 		// Simple projection
 		projection = glm::perspective(glm::radians(45.0f), *aspect_ratio, 0.1f, 100.0f);
 
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 		//Camera projection
-		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+		/// Rotate cam 
+		//	view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		
+		// Walk around cam
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
 		shaderProgram->Activate();
 		shaderProgram->setMat4("projection", projection);
 		shaderProgram->setMat4("view", view);
