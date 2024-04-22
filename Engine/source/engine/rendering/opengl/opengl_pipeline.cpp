@@ -96,7 +96,8 @@ namespace Engine
 	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio, Camera* camera)
 	{
 		// Update all the timing stuff
-		Time::UpdateDeltaTime();
+		Time::UpdateTime();
+		//std::cout << "FPS: " << Time::GetFramesPerSecond() << std::endl;
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
