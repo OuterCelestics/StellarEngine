@@ -21,10 +21,12 @@ namespace Engine {
 			Updates all the timings of the engine
 		*/
 		static void UpdateTime();
-		static void GetFramesPerSecond();
+		static int GetFramesPerSecond();
+		static int GetFramesPerSecond(float delay);
 
 	private:
 		static void UpdateDeltaTime();
+		static int m_tempFrameCount;
 	};
 	
 }

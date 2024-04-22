@@ -9,6 +9,7 @@ namespace Engine {
 	double Time::currentTime = 0.0f;
 	double	Time::previousTime = glfwGetTime();
 	int Time::framesCount = 0;
+	int Time::m_tempFrameCount = 0;
 
 	void Time::UpdateTime()
 	{
@@ -23,15 +24,22 @@ namespace Engine {
 		lastFrame = Time::currentTime;
 	}
 
-	void Time::GetFramesPerSecond()
+	int Time::GetFramesPerSecond()
+	{
+		return 1000 / Time::deltaTime;
+	}
+
+	int Time::GetFramesPerSecond(float delay)
 	{
 		Time::framesCount++;
-		if (Time::currentTime - Time::previousTime >= 1.0)
+		if (Time::currentTime - Time::previousTime >= delay)
 		{
-			std::cout << framesCount << std::endl;
+			m_tempFrameCount = framesCount;
 			Time::framesCount = 0;
 			Time::previousTime = Time::currentTime;
-			
+			return m_tempFrameCount;
 		}
+		return m_tempFrameCount;
 	}
+
 }
