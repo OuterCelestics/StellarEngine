@@ -46,12 +46,12 @@ namespace Engine
 
 		m_Input->BindAction("left", [this]()
 		{
-				m_MainCamera.cameraPos -= glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp) * cameraSpeed);
+				m_MainCamera.cameraPos -= glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * cameraSpeed;
 		});
 		
 		m_Input->BindAction("right", [this]()
 		{
-				m_MainCamera.cameraPos += glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp) * cameraSpeed);
+				m_MainCamera.cameraPos += glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * cameraSpeed\;
 		});
 	}
 
