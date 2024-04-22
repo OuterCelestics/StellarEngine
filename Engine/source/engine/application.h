@@ -37,7 +37,7 @@ namespace Engine
         int m_window_height;
         int m_window_width;
         float m_aspect_ratio;
-        const float cameraSpeed = 0.005f;
+        const float cameraSpeed = 2.5f;
     };
 
     // To be defined in CLIENT

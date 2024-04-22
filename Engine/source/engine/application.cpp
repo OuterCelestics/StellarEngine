@@ -1,5 +1,6 @@
 #include "application.h"
 #include "iostream"
+#include "components/time/Time.h"
 
 namespace Engine 
 {
@@ -36,22 +37,22 @@ namespace Engine
 		
 		m_Input->BindAction("forward", [this]()
 		{
-				m_MainCamera.cameraPos += cameraSpeed * m_MainCamera.cameraFront;
+				m_MainCamera.cameraPos += (cameraSpeed * Time::deltaTime) * m_MainCamera.cameraFront;
 		});
 		
 		m_Input->BindAction("backwards", [this]()
 		{
-				m_MainCamera.cameraPos -= cameraSpeed * m_MainCamera.cameraFront;
+				m_MainCamera.cameraPos -= (cameraSpeed * Time::deltaTime) * m_MainCamera.cameraFront;
 		});
 
 		m_Input->BindAction("left", [this]()
 		{
-				m_MainCamera.cameraPos -= glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * cameraSpeed;
+				m_MainCamera.cameraPos -= glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * (cameraSpeed * Time::deltaTime);
 		});
 		
 		m_Input->BindAction("right", [this]()
 		{
-				m_MainCamera.cameraPos += glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * cameraSpeed;
+				m_MainCamera.cameraPos += glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * (cameraSpeed * Time::deltaTime);
 		});
 	}
 
