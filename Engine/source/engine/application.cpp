@@ -41,7 +41,7 @@ namespace Engine
 		
 		m_Input->BindAction("backwards", [this]()
 		{
-				m_MainCamera.cameraPos -= cameraSpeed + m_MainCamera.cameraFront;
+				m_MainCamera.cameraPos -= cameraSpeed * m_MainCamera.cameraFront;
 		});
 
 		m_Input->BindAction("left", [this]()
