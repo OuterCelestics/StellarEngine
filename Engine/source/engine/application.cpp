@@ -9,7 +9,7 @@ namespace Engine
 		// Load the configuration file
 		config = new ConfigLoader("config", "BaseEngine.ini");
 
-	    // Load the configuration file
+	    // Set the window properties
 		m_window_height = config->GetInteger("general", "window_height");
 		m_window_width = config->GetInteger("general", "window_width");
 		m_aspect_ratio = config->GetFloat("general", "window_aspect_ratio");
