@@ -15,6 +15,8 @@ namespace Engine
 		m_aspect_ratio = config->GetFloat("general", "window_aspect_ratio");
 		
 		m_Window = new WindowManager(&m_window_width, &m_window_height, &m_aspect_ratio, config->getString("general", "window_title").c_str(), config);
+		
+		m_Window->CaptureMouse(true);
 
 		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
 
@@ -30,9 +32,7 @@ namespace Engine
 
 		m_Input->BindAction("escape", [this]()
 		{
-			glfwDestroyWindow(m_Window->getWindow());
-			glfwTerminate();
-			exit(0);
+				m_Window->CaptureMouse(false);
 		});
 		
 		m_Input->BindAction("forward", [this]()
