@@ -22,7 +22,7 @@ namespace Engine {
 		*/
 		static void UpdateTime();
 		static int GetFramesPerSecond();
-		static int GetFramesPerSecond(float delay);
+		static float  GetFramesPerSecond(float delay);
 
 	private:
 		static void UpdateDeltaTime();

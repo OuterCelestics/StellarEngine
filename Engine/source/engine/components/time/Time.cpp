@@ -14,7 +14,6 @@ namespace Engine {
 	void Time::UpdateTime()
 	{
 		Time::UpdateDeltaTime();
-		Time::GetFramesPerSecond();
 	}
 
 	void Time::UpdateDeltaTime()
@@ -29,17 +28,22 @@ namespace Engine {
 		return 1000 / Time::deltaTime;
 	}
 
-	int Time::GetFramesPerSecond(float delay)
+	float Time::GetFramesPerSecond(float delay)
 	{
 		Time::framesCount++;
-		if (Time::currentTime - Time::previousTime >= delay)
+		// Calculate the elapsed time since the last FPS print
+		double elapsed = currentTime - previousTime;
+		if (elapsed >= delay) 
 		{
-			m_tempFrameCount = framesCount;
-			Time::framesCount = 0;
-			Time::previousTime = Time::currentTime;
-			return m_tempFrameCount;
+			float fps = framesCount / elapsed;
+
+			// Reset frame count and update previous time
+			framesCount = 0;
+			previousTime = currentTime;
+
+			return fps;
 		}
-		return m_tempFrameCount;
+		return -1;
 	}
 
 }
