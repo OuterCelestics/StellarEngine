@@ -56,8 +56,6 @@ namespace Engine
 			std::cout << "Failed to initialize GLAD" << std::endl;
 		}
 		
-		glm::vec3 camera = glm::vec3(0, 0, 0);
-
 		// Enable depth test so we have proper ordening
 		glEnable(GL_DEPTH_TEST);
 
@@ -89,44 +87,31 @@ namespace Engine
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
-//	glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
-//	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-//	glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
-	
 	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio, Camera* camera)
 	{
 		// Update all the timing stuff
 		Time::UpdateTime();
-		
+	
+		// Print fps
 		float fps = Time::GetFramesPerSecond(1.5f);
 		if (fps != -1) std::cout << "FPS " << fps << std::endl;
 
+		// Clear the screen
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		// create transformations
-		//glm::mat4 model = glm::mat4(1.0f);
-		// make sure to initialize matrix to identity matrix first
+		// Create transformations
+		// Make sure to initialize matrix to identity matrix first
 		glm::mat4 view = glm::mat4(1.0f);
 		float radius = 10.0f;
 		glm::mat4 projection = glm::mat4(1.0f);
-
-		float camX = static_cast<float>(sin(glfwGetTime()) * radius);
-		float camZ = static_cast<float>(cos(glfwGetTime()) * radius);
-
-		//std::cout << "camX: " << camX << "camZ" << camZ << std::endl;
 
 		// Simple projection
 		projection = glm::perspective(glm::radians(45.0f), *aspect_ratio, 0.1f, 100.0f);
 
 		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
-		//Camera projection
-
-		/// Rotate cam 
-		//	view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		
-		// Walk around cam
+		// Walk around cam using camera
 		view = glm::lookAt(camera->cameraPos, camera->cameraPos + camera->cameraFront, camera->cameraUp);
 
 		shaderProgram->Activate();
