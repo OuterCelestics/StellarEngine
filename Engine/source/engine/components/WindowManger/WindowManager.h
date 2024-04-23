@@ -12,6 +12,7 @@ namespace Engine
 		WindowManager(int* width, int* height, float* aspect_ratio, const char* name, ConfigLoader* config);
 		static ConfigLoader* m_Config;
 		GLFWwindow* getWindow() { return m_window; }
+		void CaptureMouse(bool capture);
 		void Terminate(ConfigLoader* config);
 
 	private:

@@ -53,6 +53,12 @@ namespace Engine
 
 		glfwSwapInterval(0);
 	}
+
+	void WindowManager::CaptureMouse(bool capture)
+	{
+		glfwSetInputMode(m_window, GLFW_CURSOR, capture ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+	}
+
 	void WindowManager::Terminate(ConfigLoader* config)
 	{
 		// Write the final window dimentsions to the config file
