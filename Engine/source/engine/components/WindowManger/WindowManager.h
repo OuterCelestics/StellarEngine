@@ -1,10 +1,11 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "../config/config_loader.h" 
+#include "../../core.h"
 
 namespace Engine 
 {
-	class WindowManager
+	class ENGINE_API WindowManager
 	{
 	private:
 		GLFWwindow* m_window;

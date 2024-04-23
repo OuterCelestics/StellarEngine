@@ -1,7 +1,10 @@
 #pragma once
+
+#include "../../core.h"
+
 namespace Engine {
 	
-	class Time
+	class ENGINE_API Time
 	{
 	public:
 		/**

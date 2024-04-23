@@ -4,9 +4,10 @@
 #include <string>
 #include <GLFW/glfw3.h>
 #include "../config/config_loader.h"
+#include "../../core.h"
 
 namespace Engine::Input {
-	class InputEvent {
+	class ENGINE_API InputEvent {
 	public:
 		std::map<std::string, std::function<void()>> actionMappings;
 

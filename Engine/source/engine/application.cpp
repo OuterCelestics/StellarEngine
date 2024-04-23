@@ -6,54 +6,33 @@ namespace Engine
 {
 	Application::Application()
 	{
-		std::cout << "Stellar Engine is initialized" << std::endl;
-
+		// Load the configuration file
 		config = new ConfigLoader("config", "BaseEngine.ini");
-		
+
+	    // Load the configuration file
 		m_window_height = config->GetInteger("general", "window_height");
 		m_window_width = config->GetInteger("general", "window_width");
 		m_aspect_ratio = config->GetFloat("general", "window_aspect_ratio");
 		
+		// Initialize the window
 		m_Window = new WindowManager(&m_window_width, &m_window_height, &m_aspect_ratio, config->getString("general", "window_title").c_str(), config);
-		
-		m_Window->CaptureMouse(true);
-
-		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
-
-		if (config->GetInteger("general", "window_maximized") == GLFW_TRUE) 
+		// Set the input event to the window
+		if (config->GetInteger("general", "window_maximized") == GLFW_TRUE)
 		{
 			glfwMaximizeWindow(m_Window->getWindow());
 		}
 		else {
 			config->SetInt("general", "window_maximized", 0);
 		}
-		
+
+		// Initialize the rendering pipeline
 		api->Initialize();
 
-		m_Input->BindAction("escape", [this]()
-		{
-				m_Window->CaptureMouse(false);
-		});
-		
-		m_Input->BindAction("forward", [this]()
-		{
-				m_MainCamera.cameraPos += (cameraSpeed * Time::deltaTime) * m_MainCamera.cameraFront;
-		});
-		
-		m_Input->BindAction("backwards", [this]()
-		{
-				m_MainCamera.cameraPos -= (cameraSpeed * Time::deltaTime) * m_MainCamera.cameraFront;
-		});
+		// Set the input event to the window
+		glfwSetWindowUserPointer(m_Window->getWindow(), &m_Input);
 
-		m_Input->BindAction("left", [this]()
-		{
-				m_MainCamera.cameraPos -= glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * (cameraSpeed * Time::deltaTime);
-		});
-		
-		m_Input->BindAction("right", [this]()
-		{
-				m_MainCamera.cameraPos += glm::normalize(glm::cross(m_MainCamera.cameraFront, m_MainCamera.cameraUp)) * (cameraSpeed * Time::deltaTime);
-		});
+		// Capture mouse input
+		m_Window->CaptureMouse(true);
 	}
 
 	// Termination of the application
@@ -70,7 +49,7 @@ namespace Engine
 			m_Input->processInput(m_Window->getWindow());
 
 			// render
-			api->Render(config, &m_aspect_ratio, &m_MainCamera);
+			api->Render(config, &m_aspect_ratio, m_MainCamera);
 
 			// Swap front and back buffers
 			glfwSwapBuffers(m_Window->getWindow());

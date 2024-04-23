@@ -1,15 +1,17 @@
 #pragma once
+
+// c++ includes
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+// Engine includes
 #include "core.h"
 #include "components/input/input.h"
 #include "rendering/opengl_pipeline.h"
 #include "components/WindowManger/WindowManager.h"
 #include "components/config/config_loader.h"
 #include "components/camera/camera.h"
-
 
 namespace Engine 
 {
@@ -20,18 +22,15 @@ namespace Engine
     public:
         Application();
         virtual ~Application(); // Destructor to clean up allocated resources
-
         void Run();
 
     public: 
         ConfigLoader* config = nullptr;
-    private:
-        WindowManager* m_Window = nullptr;
+        Camera* m_MainCamera = new Camera;
         InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
-        Camera m_MainCamera;
-
-    public:
+        WindowManager* m_Window = nullptr;
         Pipeline* api = new Pipeline();
+
     private:
         int m_window_height;
         int m_window_width;

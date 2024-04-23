@@ -1,7 +1,8 @@
 #pragma once
 #include <glm.hpp>
+#include "../../core.h"
 
-class Camera
+class ENGINE_API Camera
 {
 public:
 	glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
