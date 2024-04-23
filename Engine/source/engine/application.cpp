@@ -9,6 +9,7 @@ namespace Engine
 		// Load the configuration file
 		config = new ConfigLoader("config", "BaseEngine.ini");
 		m_Input = new InputEvent("config", "BaseInput.ini");
+
 	    // Set the window properties
 		m_window_height = config->GetInteger("general", "window_height");
 		m_window_width = config->GetInteger("general", "window_width");

@@ -8,11 +8,11 @@ namespace Editor::Utils
 
 		if (m_Shader != nullptr)
 		{
-			std::cout << "Shader is not null" << std::endl;
+			std::cout << "Shader is valid" << std::endl;
 		}
 		else
 		{
-			std::cout << "Shader is null" << std::endl;
+			std::cout << "Shader is invalid" << std::endl;
 		}
 	}
 }
