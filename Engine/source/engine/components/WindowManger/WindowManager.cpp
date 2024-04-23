@@ -66,8 +66,8 @@ namespace Engine
 		config->SetInt("general", "window_width", *m_window_width);
 		config->SetFloat ("general", "window_aspect_ratio", *m_aspect_ratio);
 
-		glfwTerminate();
 		glfwDestroyWindow(m_window);
+		glfwTerminate();
 	}
 
 	// Callbacks

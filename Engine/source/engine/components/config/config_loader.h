@@ -9,8 +9,6 @@ namespace Engine {
     class ConfigLoader {
     public:
         ConfigLoader(std::string folder, std::string file_name);
-        bool WriteConfig(const std::map<std::string, std::map<std::string, std::string>>& configData);
-        bool LoadConfig();
 
         // Get values
         int GetInteger(const std::string section, const std::string key) const;
@@ -25,7 +23,7 @@ namespace Engine {
         bool m_ParseConfig();
         std::string folder;
         const std::string file_path;
-        std::ofstream config_file;
+        std::ifstream config_file;
         mutable std::map<std::string, std::map<std::string, std::string>> configData;
 
         // Helper function to remove leading and trailing whitespaces from a string

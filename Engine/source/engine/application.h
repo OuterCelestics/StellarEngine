@@ -27,7 +27,7 @@ namespace Engine
     public: 
         ConfigLoader* config = nullptr;
         Camera* m_MainCamera = new Camera;
-        InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
+        InputEvent* m_Input = nullptr;
         WindowManager* m_Window = nullptr;
         Pipeline* api = new Pipeline();
 

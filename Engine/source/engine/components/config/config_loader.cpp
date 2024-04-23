@@ -1,40 +1,17 @@
 #include "config_loader.h"
 
 namespace Engine {
-	ConfigLoader::ConfigLoader(std::string folder, std::string file_name)
-		: folder(folder), file_path(folder + "/" + file_name)
+	ConfigLoader::ConfigLoader(std::string folder, std::string file_name) : folder(folder), file_path(folder + "/" + file_name) 
 	{
-		m_ParseConfig();
-	}
-
-	bool ConfigLoader::WriteConfig(const std::map<std::string, std::map<std::string, std::string>>& configData)
-	{
-		config_file.open(file_path, std::ios::out | std::ios::app);  // Open file in append mode
-		if (!config_file.is_open()) 
+		// Load the config file
+		if (!m_ParseConfig())
 		{
-			std::cout << "Error opening file: " << file_path << std::endl;
-			return false;
+			std::cerr << "Error loading config file: " << file_path << std::endl;
 		}
-
-		// Iterate through categories and key-value pairs and write to the file
-		for (const auto& category : configData) 
+		else
 		{
-			config_file << "[" << category.first << "]" << std::endl;
-			for (const auto& kvp : category.second) 
-			{
-				config_file << kvp.first << "=" << kvp.second << std::endl;
-			}
-			config_file << std::endl; // Add a blank line after each category
+			std::cout << "Config file loaded successfully: " << file_path << std::endl;
 		}
-
-		// Close the file
-		config_file.close();
-		return true;
-	}
-
-	bool ConfigLoader::LoadConfig()
-	{
-		return m_ParseConfig();
 	}
 
 	int ConfigLoader::GetInteger(const std::string section, const std::string key) const 
@@ -57,7 +34,6 @@ namespace Engine {
 		}
 		return 0; // Return an empty string if the key or section is not found
 	}
-
 	float ConfigLoader::GetFloat(const std::string section, const std::string key) const
 	{
 		auto sectionIter = configData.find(section);
@@ -125,7 +101,6 @@ namespace Engine {
 				{
 					configFile << kvp.first << "=" << kvp.second << std::endl;
 				}
-				configFile << std::endl;
 			}
 
 			// Close the file
@@ -156,7 +131,6 @@ namespace Engine {
 			{
 				configFile << kvp.first << "=" << kvp.second << std::endl;
 			}
-			configFile << std::endl;
 		}
 
 		// Close the file
@@ -187,7 +161,6 @@ namespace Engine {
 			{
 				configFile << kvp.first << "=" << kvp.second << std::endl;
 			}
-			configFile << std::endl;
 		}
 
 		// Close the file
@@ -195,61 +168,62 @@ namespace Engine {
 	}
 
 	bool ConfigLoader::m_ParseConfig()
+{	
+		config_file.open(file_path);  // Open the file
+	if (!config_file.is_open()) 
 	{
-		std::ifstream file(file_path);
-		if (!file.is_open()) 
+		std::cout << "Error opening file: " << file_path << std::endl;
+		return false;
+	}
+
+	std::string currentSection = "";
+	std::string line;
+	
+	try
+	{
+		while (std::getline(config_file, line))
 		{
-			std::cout << "Error opening file: " << file_path << std::endl;
-			return false;
-		}
+			// Remove leading and trailing whitespaces
+			line = trim(line);
 
-		std::string currentSection = "";
-		std::string line;
-		
-		try
-		{
-			while (std::getline(file, line)) 
-			{
-				// Remove leading and trailing whitespaces
-				line = trim(line);
-
-				// Skip empty lines
-				if (line.empty()) {
-					continue;
-				}
-
-				// Skip comments
-				if (line[0] == ';') {
-					continue;
-				}
-
-				// Check for section header
-				if (line[0] == '[' && line.back() == ']') 
-				{
-					currentSection = line.substr(1, line.size() - 2);
-				}
-				else 
-				{
-					// Parse key-value pairs
-					std::size_t equalsPos = line.find('=');
-					if (equalsPos != std::string::npos) {
-						std::string key = trim(line.substr(0, equalsPos));
-						std::string value = trim(line.substr(equalsPos + 1));
-						configData[currentSection][key] = value;
-					}
-				}
+			// Skip empty lines
+			if (line.empty()) {
+				continue;
 			}
 
-			file.close();  // Close the file explicitly
-			return true;
-		}
-		catch (const std::exception&)
-		{
-			std::cout << "Error parsing config file: " << file_path + "\n" << std::endl;
+			// Skip comments
+			if (line[0] == ';') {
+				continue;
+			}
+
+			// Check for section header
+			if (line[0] == '[' && line.back() == ']') 
+			{
+				currentSection = line.substr(1, line.size() - 2);
+			}
+			else 
+			{
+				// Parse key-value pairs
+				std::size_t equalsPos = line.find('=');
+				if (equalsPos != std::string::npos) {
+					std::string key = trim(line.substr(0, equalsPos));
+					std::string value = trim(line.substr(equalsPos + 1));
+					configData[currentSection][key] = value;
+				}
+			}
 		}
 
+		config_file.close();  // Close the file explicitly
 		return true;
 	}
+	catch (const std::exception&)
+	{
+		std::cout << "Error parsing config file: " << file_path + "\n" << std::endl;
+	}
+
+	return true;
+}
+
 
 	std::string ConfigLoader::trim(const std::string& str) 
 	{
