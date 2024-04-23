@@ -1,6 +1,4 @@
 #include "opengl_pipeline.h"
-#include "../../components/time/time.h"
-#include "../../components/camera/camera.h"
 
 namespace Engine
 {
@@ -48,7 +46,7 @@ namespace Engine
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	void OpenGLRenderPipeline::Initialize()
+	void Pipeline::Initialize()
 	{
 		// Load gladGLAD
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -87,7 +85,7 @@ namespace Engine
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 
-	void OpenGLRenderPipeline::Render(ConfigLoader* config, float* aspect_ratio, Camera* camera)
+	void Pipeline::Render(ConfigLoader* config, float* aspect_ratio, Camera* camera)
 	{
 		// Update all the timing stuff
 		Time::UpdateTime();
@@ -146,22 +144,8 @@ namespace Engine
 		glUseProgram(0);
 	}
 
-	void OpenGLRenderPipeline::Terminate()
+	void Pipeline::Terminate()
 	{
 		
-	}
-
-	Shaders* OpenGLRenderPipeline::getShaderProgram()
-	{
-		if (shaderProgram != nullptr) 
-		{
-			std::cout << "Shader program is not null" << std::endl;
-			return shaderProgram;
-		}
-		else
-		{
-			std::cout << "Shader program is null" << std::endl;
-			return nullptr;
-		}			
 	}
 }

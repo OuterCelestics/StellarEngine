@@ -9,7 +9,7 @@
 #include<cerrno>
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
-#include "../../../core.h"
+#include "../../core.h"
 
 namespace Engine {
 	class ENGINE_API Shaders {

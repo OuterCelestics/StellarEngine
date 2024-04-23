@@ -5,7 +5,7 @@
 
 #include "core.h"
 #include "components/input/input.h"
-#include "rendering/layer.h"
+#include "rendering/opengl_pipeline.h"
 #include "components/WindowManger/WindowManager.h"
 #include "components/config/config_loader.h"
 #include "components/camera/camera.h"
@@ -30,9 +30,8 @@ namespace Engine
         InputEvent* m_Input = new InputEvent("config", "BaseInput.ini");
         Camera m_MainCamera;
 
-        GraphicsAPIFactory factory;
     public:
-        GraphicsAPI* api =  factory.CreateGraphicsAPI(GraphicsAPIType::OpenGL);
+        Pipeline* api = new Pipeline();
     private:
         int m_window_height;
         int m_window_width;
