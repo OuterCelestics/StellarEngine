@@ -56,7 +56,7 @@ namespace Editor
 
 		void OnUpdate() override
 		{
-			
+			reload->CheckForShaderUpdate();
 		}
 	};
 }

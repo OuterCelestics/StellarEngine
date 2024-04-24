@@ -59,4 +59,18 @@ namespace Editor::Utils
 	{
 		m_Shader->Delete();
 	}
+
+	void ShaderReload::CheckForShaderUpdate()
+	{
+		std::filesystem::file_time_type newModifiedTime = std::filesystem::last_write_time("shaders/default.frag");
+
+		if (newModifiedTime > m_shaderModifiedTime)
+		{
+			std::cout << "Shader updated... reloading shader..." << std::endl;
+			m_shaderModifiedTime = newModifiedTime;
+			ShaderReload::Bind();
+			ShaderReload::Reload();
+
+		}
+	}
 }
