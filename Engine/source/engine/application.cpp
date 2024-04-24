@@ -49,6 +49,9 @@ namespace Engine
 			// process input
 			m_Input->processInput(m_Window->getWindow());
 
+			// Update
+			OnUpdate();
+
 			// render
 			api->Render(config, &m_aspect_ratio, m_MainCamera);
 

@@ -23,7 +23,7 @@ namespace Engine
         Application();
         virtual ~Application(); // Destructor to clean up allocated resources
         void Run();
-
+        virtual void OnUpdate() = 0;
     public: 
         ConfigLoader* config = nullptr;
         Camera* m_MainCamera = new Camera;

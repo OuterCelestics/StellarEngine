@@ -44,6 +44,11 @@ namespace Editor
 				m_MainCamera->cameraPos += glm::normalize(glm::cross(m_MainCamera->cameraFront, m_MainCamera->cameraUp)) * (0.005f * Engine::Time::deltaTime);
 			});
 		}
+
+		void OnUpdate() override
+		{
+			std::cout << "Stellar Editor is looping" << std::endl;
+		}
 	};
 }
 
