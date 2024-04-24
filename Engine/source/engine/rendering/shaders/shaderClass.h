@@ -1,12 +1,7 @@
-#ifndef SHADER_CLASS_H
-#define SHADER_CLASS_H
+#pragma once
 
 #include<glad/glad.h>
 #include<string>
-#include<fstream>
-#include<sstream>
-#include<iostream>
-#include<cerrno>
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
 #include "../../core.h"
@@ -50,6 +45,3 @@ namespace Engine {
 		unsigned int vertex, fragment;
 	};
 }
-
-#endif // !BUFFER_CLASS_H
- 

@@ -1,4 +1,5 @@
 #include "shader_reload.h"
+#include <iostream>
 
 namespace Editor::Utils
 {

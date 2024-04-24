@@ -1,10 +1,5 @@
 #pragma once
 
-// c++ includes
-#include <iostream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 // Engine includes
 #include "core.h"
 #include "components/input/input.h"
@@ -35,7 +30,7 @@ namespace Engine
         int m_window_height;
         int m_window_width;
         float m_aspect_ratio;
-        const float cameraSpeed = 0.005f;
+        //const float cameraSpeed = 11.5f;
     };
 
     // To be defined in CLIENT

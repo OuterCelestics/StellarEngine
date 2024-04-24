@@ -1,4 +1,8 @@
 #include "shaderClass.h"
+#include<fstream>
+#include<cerrno>
+#include<sstream>
+#include<iostream>
 
 namespace Engine {
 	void Shaders::Compile(const GLchar* vertexPath, const GLchar* fragmentPath)

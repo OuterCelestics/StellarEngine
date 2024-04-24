@@ -1,5 +1,6 @@
 #include <engine.h>
 #include <engine/entry.h>
+#include <iostream>
 
 #include "utils/shader_reload.h"
 

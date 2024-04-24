@@ -1,4 +1,5 @@
 #include "VAO.h"
+#include <glad/glad.h>
 
 namespace Engine {
 	VAO::VAO()

@@ -1,5 +1,7 @@
 #include "application.h"
-#include "iostream"
+#include <iostream>
+#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 #include "components/time/Time.h"
 
 namespace Engine 
