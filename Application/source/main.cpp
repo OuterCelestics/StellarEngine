@@ -16,12 +16,13 @@ namespace Editor
 			std::cout << "Stellar Editor is initialized" << std::endl;
 
 			// Create a reference to the shader hot reload
-			ShaderReload* reload = new ShaderReload(api->shaderProgram);
+			reload = new ShaderReload(api->shaderProgram);
 
 			// input bindings
 			m_Input->BindAction("escape", [this]()
 			{
-				m_Window->CaptureMouse(false);
+					reload->Bind();
+					reload->Reload();
 			});
 
 			m_Input->BindAction("forward", [this]()
@@ -44,10 +45,12 @@ namespace Editor
 				m_MainCamera->cameraPos += glm::normalize(glm::cross(m_MainCamera->cameraFront, m_MainCamera->cameraUp)) * (0.005f * Engine::Time::deltaTime);
 			});
 		}
+	private:
+		ShaderReload* reload = nullptr;
 
 		void OnUpdate() override
 		{
-			std::cout << "Stellar Editor is looping" << std::endl;
+			
 		}
 	};
 }
