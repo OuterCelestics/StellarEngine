@@ -22,8 +22,7 @@ namespace Editor
 			// input bindings
 			m_Input->BindAction("escape", [this]()
 			{
-					reload->Bind();
-					reload->Reload();
+				m_Window->CaptureMouse(false);
 			});
 
 			m_Input->BindAction("forward", [this]()
@@ -44,6 +43,12 @@ namespace Editor
 			m_Input->BindAction("right", [this]()
 			{
 				m_MainCamera->cameraPos += glm::normalize(glm::cross(m_MainCamera->cameraFront, m_MainCamera->cameraUp)) * (0.005f * Engine::Time::deltaTime);
+			});
+
+			m_Input->BindAction("reload", [this]()
+			{
+				reload->Bind();
+				reload->Reload();
 			});
 		}
 	private:

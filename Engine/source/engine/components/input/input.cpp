@@ -44,6 +44,9 @@ namespace Engine::Input {
 		else if (value == "d") {
 			return GLFW_KEY_D;
 		}
+		else if (value == "r") {
+			return GLFW_KEY_R;
+		}
 		else {
 			return -1;
 		}
