@@ -14,7 +14,7 @@ project "StellarEditor"
     includedirs{
        "source",
         -- Include Core
-	    "../Engine/source",
+	    "../StellarEngine/source",
         "$(SolutionDir)Submodules/GLFW/include",
         "$(SolutionDir)Dependencies/Glad/include",
         "$(SolutionDir)Dependencies/glm",
@@ -31,7 +31,7 @@ project "StellarEditor"
     }
    
     links {
-       "Engine",
+       "StellarEngine",
        "glfw"
     }
    

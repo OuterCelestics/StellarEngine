@@ -1,5 +1,5 @@
 -- premake5.lua
-workspace "StellarEngine"
+workspace "Stellar"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
    startproject "StellarEditor"
@@ -14,7 +14,7 @@ group "Dependencies"
    include "Submodules/GLFW/Build-GLFW.lua"
 
 group "Engine"
-	include "Engine/Build-Engine.lua"
+	include "StellarEngine/Build-StellarEngine.lua"
 group ""
 
 include "StellarEditor/Build-StellarEditor.lua"

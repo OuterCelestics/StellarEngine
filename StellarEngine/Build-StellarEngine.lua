@@ -1,4 +1,4 @@
-project "Engine"
+project "StellarEngine"
     kind "SharedLib"
     language "C++"
     cppdialect "C++20"
