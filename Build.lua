@@ -2,7 +2,7 @@
 workspace "StellarEngine"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "Application"
+   startproject "StellarEditor"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -17,4 +17,4 @@ group "Engine"
 	include "Engine/Build-Engine.lua"
 group ""
 
-include "Application/Build-Application.lua"
+include "StellarEditor/Build-StellarEditor.lua"

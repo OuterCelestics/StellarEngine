@@ -1,4 +1,4 @@
-project "Application"
+project "StellarEditor"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++20"
