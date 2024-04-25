@@ -44,19 +44,20 @@ namespace Editor
 			{
 				m_MainCamera->cameraPos += glm::normalize(glm::cross(m_MainCamera->cameraFront, m_MainCamera->cameraUp)) * (0.005f * Engine::Time::deltaTime);
 			});
-
-			m_Input->BindAction("reload", [this]()
-			{
-				reload->Bind();
-				reload->Reload();
-			});
 		}
 	private:
 		ShaderReload* reload = nullptr;
 
 		void OnUpdate() override
 		{
-			reload->CheckForShaderUpdate();
+			try
+			{
+				reload->CheckForShaderUpdate();
+			}
+			catch (const std::exception& e)
+			{
+				Debug::ErrorLog(e.what(), true);
+			}
 		}
 	};
 }

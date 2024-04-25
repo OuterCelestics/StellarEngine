@@ -39,7 +39,7 @@ namespace Editor::Utils
 		}
 		else
 		{
-			std::cout << "Shader is invalid" << std::endl;
+			Debug::ErrorLog("Failed to reload shader", false);
 		}
 	}
 
