@@ -47,6 +47,15 @@ namespace Engine::Input {
 		else if (value == "r") {
 			return GLFW_KEY_R;
 		}
+		else if (value == "ctrl") {
+			return GLFW_KEY_LEFT_CONTROL;
+		}
+		else if (value == "shift") {
+			return GLFW_KEY_LEFT_SHIFT;
+		}
+		else if (value == "space") {
+			return GLFW_KEY_SPACE;
+		}
 		else {
 			return -1;
 		}
