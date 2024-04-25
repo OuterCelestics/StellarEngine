@@ -2,6 +2,17 @@
 #include <glm.hpp>
 #include "../../core.h"
 
+enum Camera_Movement
+{
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};
+
+
 class ENGINE_API Camera
 {
 public:
@@ -13,4 +24,8 @@ public:
 	void SetCameraPosition(float x, float y, float z);
 	void SetCameraFront(float x, float y, float z);
 	void SetCameraUp(float x, float y, float z);
+
+	void MoveCamera(Camera_Movement direction);
+
+private:
 };

@@ -22,6 +22,7 @@ namespace Editor
 			// input bindings
 			m_Input->BindAction("escape", [this]()
 			{
+					m_MainCamera->MoveCamera(FORWARD);
 				m_Window->CaptureMouse(false);
 			});
 
