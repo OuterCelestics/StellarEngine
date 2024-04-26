@@ -27,27 +27,37 @@ namespace Editor
 
 			m_Input->BindAction("forward", [this]()
 			{
-				m_MainCamera->cameraPos += (0.005f * Engine::Time::deltaTime) * m_MainCamera->cameraFront;
+				m_MainCamera->MoveCamera(FORWARD, speed);
 			});
 
 			m_Input->BindAction("backwards", [this]()
 			{
-				m_MainCamera->cameraPos -= (0.005f * Engine::Time::deltaTime) * m_MainCamera->cameraFront;
+				m_MainCamera->MoveCamera(BACKWARD, speed);
 			});
 
 			m_Input->BindAction("left", [this]()
 			{
-				m_MainCamera->cameraPos -= glm::normalize(glm::cross(m_MainCamera->cameraFront, m_MainCamera->cameraUp)) * (0.005f * Engine::Time::deltaTime);
+				m_MainCamera->MoveCamera(LEFT, speed);
 			});
 
 			m_Input->BindAction("right", [this]()
 			{
-				m_MainCamera->cameraPos += glm::normalize(glm::cross(m_MainCamera->cameraFront, m_MainCamera->cameraUp)) * (0.005f * Engine::Time::deltaTime);
+				m_MainCamera->MoveCamera(RIGHT, speed);
+			});
+
+			m_Input->BindAction("space", [this]()
+				{
+				m_MainCamera->MoveCamera(UP, speed);
+			});
+
+			m_Input->BindAction("shift", [this]()
+				{
+				m_MainCamera->MoveCamera(DOWN, speed);
 			});
 		}
 	private:
 		ShaderReload* reload = nullptr;
-
+		float speed = 0.01f;
 		void OnUpdate() override
 		{
 			try
