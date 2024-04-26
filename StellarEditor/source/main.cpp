@@ -45,12 +45,12 @@ namespace Editor
 				m_MainCamera->MoveCamera(RIGHT, speed);
 			});
 
-			m_Input->BindAction("space", [this]()
+			m_Input->BindAction("e", [this]()
 				{
 				m_MainCamera->MoveCamera(UP, speed);
 			});
 
-			m_Input->BindAction("shift", [this]()
+			m_Input->BindAction("q", [this]()
 				{
 				m_MainCamera->MoveCamera(DOWN, speed);
 			});

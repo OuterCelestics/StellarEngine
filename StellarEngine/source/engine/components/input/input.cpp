@@ -32,8 +32,14 @@ namespace Engine::Input {
 		if (value == "esc") {
 			return GLFW_KEY_ESCAPE;
 		}
+		else if (value == "q") {
+			return GLFW_KEY_Q;
+		}
 		else if (value == "w") {
 			return GLFW_KEY_W;
+		}
+		else if (value == "e") {
+			return GLFW_KEY_E;
 		}
 		else if (value == "a") {
 			return GLFW_KEY_A;
