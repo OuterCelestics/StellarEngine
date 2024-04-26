@@ -1,5 +1,6 @@
 #include "shader_reload.h"
 #include <iostream>
+#include <filesystem>
 
 namespace Editor::Utils
 {
@@ -62,22 +63,17 @@ namespace Editor::Utils
 
 	void ShaderReload::CheckForShaderUpdate(std::string vertexfName, std::string fragmentfName)
 	{
-		if (std::filesystem::exists(vertexfName) || std::filesystem::exists(fragmentfName))
+		if (std::filesystem::exists(vertexfName) && std::filesystem::exists(fragmentfName))
 		{
 			std::filesystem::file_time_type modified_time_frag = std::filesystem::last_write_time(fragmentfName);
 			std::filesystem::file_time_type modified_time_vert = std::filesystem::last_write_time(vertexfName);
 
-			if (modified_time_frag > m_modified_frag)
+			if (modified_time_frag > m_modified_frag || modified_time_vert > m_modified_vert)
 			{
-				std::cout << "Fragment shader updating..." << std::endl;
+				std::cout << "shader updating..." << std::endl;
 				m_modified_frag = modified_time_frag;
-				ShaderReload::Bind();
-				ShaderReload::Reload();
-			}
-			else if (modified_time_vert > m_modified_vert)
-			{
-				std::cout << "Vertex shader updating..." << std::endl;
 				m_modified_vert = modified_time_vert;
+
 				ShaderReload::Bind();
 				ShaderReload::Reload();
 			}

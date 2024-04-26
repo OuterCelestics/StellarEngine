@@ -20,6 +20,7 @@ namespace Editor::Utils
 	private:
 		Shaders* m_Shader = nullptr;
 		Shaders* m_ReloadedShader = nullptr;
+
 		std::filesystem::file_time_type m_modified_frag = std::filesystem::last_write_time("shaders/default.frag");
 		std::filesystem::file_time_type m_modified_vert = std::filesystem::last_write_time("shaders/default.vs");
 	};
