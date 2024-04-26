@@ -35,7 +35,7 @@ namespace Editor::Utils
 			m_Shader = m_ReloadedShader;
 			m_Shader->Activate();
 
-			std::cout << "Shader is re-activated" << std::endl;
+			std::cout << "Shaders are re-activated" << std::endl;
 		}
 		else
 		{
@@ -60,17 +60,31 @@ namespace Editor::Utils
 		m_Shader->Delete();
 	}
 
-	void ShaderReload::CheckForShaderUpdate()
+	void ShaderReload::CheckForShaderUpdate(std::string vertexfName, std::string fragmentfName)
 	{
-		std::filesystem::file_time_type newModifiedTime = std::filesystem::last_write_time("shaders/default.frag");
-
-		if (newModifiedTime > m_shaderModifiedTime)
+		if (std::filesystem::exists(vertexfName) || std::filesystem::exists(fragmentfName))
 		{
-			std::cout << "Shader updated... reloading shader..." << std::endl;
-			m_shaderModifiedTime = newModifiedTime;
-			ShaderReload::Bind();
-			ShaderReload::Reload();
+			std::filesystem::file_time_type modified_time_frag = std::filesystem::last_write_time(fragmentfName);
+			std::filesystem::file_time_type modified_time_vert = std::filesystem::last_write_time(vertexfName);
 
+			if (modified_time_frag > m_modified_frag)
+			{
+				std::cout << "Fragment shader updating..." << std::endl;
+				m_modified_frag = modified_time_frag;
+				ShaderReload::Bind();
+				ShaderReload::Reload();
+			}
+			else if (modified_time_vert > m_modified_vert)
+			{
+				std::cout << "Vertex shader updating..." << std::endl;
+				m_modified_vert = modified_time_vert;
+				ShaderReload::Bind();
+				ShaderReload::Reload();
+			}
+		}
+		else
+		{
+			Debug::ErrorLog("Vertex or fragment shader does not exist or cannot be located", true);
 		}
 	}
 }

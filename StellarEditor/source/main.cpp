@@ -58,11 +58,12 @@ namespace Editor
 	private:
 		ShaderReload* reload = nullptr;
 		float speed = 0.01f;
+
 		void OnUpdate() override
 		{
 			try
 			{
-				reload->CheckForShaderUpdate();
+				reload->CheckForShaderUpdate("shaders/default.vs", "shaders/default.frag");
 			}
 			catch (const std::exception& e)
 			{

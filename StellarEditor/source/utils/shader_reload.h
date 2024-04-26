@@ -15,12 +15,13 @@ namespace Editor::Utils
 		void Reload();
 		void Bind();
 		void Unbind();
-		void CheckForShaderUpdate();
+		void CheckForShaderUpdate(std::string vertexfName, std::string fragmentfName);
 
 	private:
 		Shaders* m_Shader = nullptr;
 		Shaders* m_ReloadedShader = nullptr;
-		std::filesystem::file_time_type m_shaderModifiedTime = std::filesystem::last_write_time("shaders/default.frag");
+		std::filesystem::file_time_type m_modified_frag = std::filesystem::last_write_time("shaders/default.frag");
+		std::filesystem::file_time_type m_modified_vert = std::filesystem::last_write_time("shaders/default.vs");
 	};
 }
 
