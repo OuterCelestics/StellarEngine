@@ -116,6 +116,7 @@ namespace Engine
 		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
 		// Walk around cam using camera
+		std::cout << &camera->cameraFront.x << "\n";
 		view = glm::lookAt(camera->cameraPos, camera->cameraPos + camera->cameraFront, camera->cameraUp);
 
 		shaderProgram->Activate();

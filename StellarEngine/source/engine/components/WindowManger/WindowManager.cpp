@@ -1,4 +1,5 @@
 #include "WindowManager.h"
+#include "../camera/camera.h"
 #include <stdio.h>
 
 namespace Engine
@@ -68,6 +69,11 @@ namespace Engine
 
 		glfwDestroyWindow(m_window);
 		glfwTerminate();
+	}
+
+	void WindowManager::SetMouseCallback(void(*MouseCallback)(GLFWwindow* window, double xposIn, double yposIn))
+	{
+		glfwSetCursorPosCallback(m_window, MouseCallback);
 	}
 
 	// Callbacks

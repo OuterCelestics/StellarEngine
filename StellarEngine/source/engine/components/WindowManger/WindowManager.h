@@ -15,6 +15,7 @@ namespace Engine
 		GLFWwindow* getWindow() { return m_window; }
 		void CaptureMouse(bool capture);
 		void Terminate(ConfigLoader* config);
+		void SetMouseCallback(void(*MouseCallback)(GLFWwindow* window, double xposIn, double yposIn));
 
 	private:
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
