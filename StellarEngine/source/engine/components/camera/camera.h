@@ -39,8 +39,10 @@ namespace Engine {
 
 		// CameraOptions
 		float movementSpeed;
-		float mouseSensitivity = 1;
+		float mouseSensitivity;
 		float zoom;
+
+		// Static members
 		static Camera* m_activeCamera;
 
 	private:

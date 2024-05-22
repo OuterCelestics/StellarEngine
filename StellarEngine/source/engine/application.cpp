@@ -22,6 +22,7 @@ namespace Engine
 		
 		// Setup mouse
 		m_MainCamera->SetActiveCamera(m_MainCamera);
+		m_MainCamera->mouseSensitivity = config->GetFloat("general", "mouseSensitivity");
 		glfwSetCursorPosCallback(m_Window->getWindow(), Camera::MouseCallback);
 
 
