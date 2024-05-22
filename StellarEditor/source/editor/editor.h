@@ -26,7 +26,7 @@ namespace Editor
 		WindowManager* m_Window = nullptr;
 		Camera* m_MainCamera = nullptr;
 		Shaders* m_Shader = nullptr;
-
+		Scene* m_ActiveScene = nullptr;
 	private:
 		float speed = 0.01f;
 	};

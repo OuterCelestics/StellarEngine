@@ -19,7 +19,8 @@ project "StellarEditor"
         "$(SolutionDir)Dependencies/Glad/include",
         "$(SolutionDir)Dependencies/glm",
         "$(SolutionDir)Submodules/ImGui/",
-        "$(SolutionDir)Dependencies/stb"
+        "$(SolutionDir)Dependencies/stb",
+        "$(SolutionDir)Dependencies/entt"
     }
 
     sysincludedirs {
