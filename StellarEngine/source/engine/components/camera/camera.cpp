@@ -8,7 +8,7 @@ namespace Engine {
 	float Camera::lastX = 2560 / 2.0f;
 	float Camera::lastY = 1080 / 2.0f;
 	bool Camera::firstMouse = true;
-	Camera Camera::m_activeCamera;
+	Camera* Camera::m_activeCamera;
 
 	Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
 	{
@@ -34,7 +34,7 @@ namespace Engine {
 		cameraUp = glm::vec3(x, y, z);
 	}
 
-	void Camera::SetActiveCamera(Camera activeCamera)
+	void Camera::SetActiveCamera(Camera* activeCamera)
 	{
 		m_activeCamera = activeCamera;
 	}
@@ -106,7 +106,7 @@ namespace Engine {
 		lastX = xpos;
 		lastY = ypos;
 
-		m_activeCamera.RotateCamera(xoffset, yoffset, true);
+		m_activeCamera->RotateCamera(xoffset, yoffset, true);
 	}
 
 	void Camera::UpdateCameraVectors()
@@ -117,7 +117,6 @@ namespace Engine {
         front.y = sin(glm::radians(pitch));
         front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
         cameraFront = glm::normalize(front);
-		std::cout << &cameraFront.x << "\n";
         // also re-calculate the Right and Up vector
         cameraRight = glm::normalize(glm::cross(cameraFront, worldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
         cameraUp    = glm::normalize(glm::cross(cameraRight, cameraFront));

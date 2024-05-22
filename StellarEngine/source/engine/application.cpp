@@ -21,7 +21,7 @@ namespace Engine
 		m_Window = new WindowManager(&m_window_width, &m_window_height, &m_aspect_ratio, config->getString("general", "window_title").c_str(), config);
 		
 		// Setup mouse
-		m_MainCamera->SetActiveCamera(*m_MainCamera);
+		m_MainCamera->SetActiveCamera(m_MainCamera);
 		glfwSetCursorPosCallback(m_Window->getWindow(), Camera::MouseCallback);
 
 

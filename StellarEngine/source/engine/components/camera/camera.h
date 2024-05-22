@@ -41,7 +41,7 @@ namespace Engine {
 		float movementSpeed;
 		float mouseSensitivity = 1;
 		float zoom;
-		static Camera m_activeCamera;
+		static Camera* m_activeCamera;
 
 	private:
 		static float lastX;
@@ -49,7 +49,7 @@ namespace Engine {
 		static bool firstMouse;
 
 	public:
-		void SetActiveCamera(Camera activeCamera);
+		void SetActiveCamera(Camera* activeCamera);
 		void SetCameraPosition(float x, float y, float z);
 		void SetCameraFront(float x, float y, float z);
 		void SetCameraUp(float x, float y, float z);
