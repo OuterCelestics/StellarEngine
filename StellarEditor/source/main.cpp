@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "utils/shader_reload.h"
+#include "editor/editor.h"
 
 namespace Editor
 {
@@ -12,63 +13,17 @@ namespace Editor
 	{
 	public:
 		// Constructor to initialize the application
-		Source()
+		Source() : Application(new Engine::ConfigLoader("config", "BaseEngine.ini"))
 		{
-			std::cout << "Stellar Editor is initialized" << std::endl;
-
-			// Create a reference to the shader hot reload
-			reload = new ShaderReload(api->shaderProgram);
-
-			// input bindings
-			m_Input->BindAction("escape", [this]()
-			{
-				m_Window->CaptureMouse(false);
-			});
-
-			m_Input->BindAction("forward", [this]()
-			{
-				m_MainCamera->MoveCamera(FORWARD, speed);
-			});
-
-			m_Input->BindAction("backwards", [this]()
-			{
-				m_MainCamera->MoveCamera(BACKWARD, speed);
-			});
-
-			m_Input->BindAction("left", [this]()
-			{
-				m_MainCamera->MoveCamera(LEFT, speed);
-			});
-
-			m_Input->BindAction("right", [this]()
-			{
-				m_MainCamera->MoveCamera(RIGHT, speed);
-			});
-
-			m_Input->BindAction("e", [this]()
-				{
-				m_MainCamera->MoveCamera(UP, speed);
-			});
-
-			m_Input->BindAction("q", [this]()
-				{
-				m_MainCamera->MoveCamera(DOWN, speed);
-			});
+			std::cout << "Editor Application Initialized" << std::endl;
+			pushLayer(new Editor(this));
 		}
-	private:
-		ShaderReload* reload = nullptr;
-		float speed = 0.01f;
 
-		void OnUpdate() override
+		// Destructor to clean up allocated resources
+		~Source()
 		{
-			try
-			{
-				reload->CheckForShaderUpdate("shaders/default.vs", "shaders/default.frag");
-			}
-			catch (const std::exception& e)
-			{
-				Debug::ErrorLog(e.what(), true);
-			}
+			std::cout << "Editor Application Terminated" << std::endl;
+			popLayer(m_LayerStack->m_Layers[0]);
 		}
 	};
 }

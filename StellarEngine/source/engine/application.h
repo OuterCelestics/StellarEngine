@@ -7,6 +7,8 @@
 #include "components/WindowManger/WindowManager.h"
 #include "components/config/config_loader.h"
 #include "components/camera/camera.h"
+#include "layers/layer.h"
+#include "layers/layer_stack.h"
 
 namespace Engine 
 {
@@ -15,16 +17,18 @@ namespace Engine
     class ENGINE_API Application 
     {
     public:
-        Application();
+        Application(ConfigLoader* config);
         virtual ~Application(); // Destructor to clean up allocated resources
         void Run();
-        virtual void OnUpdate() = 0;
+		void pushLayer(Layer* layer);
+		void popLayer(Layer* layer);
     public: 
         ConfigLoader* config = nullptr;
         Camera* m_MainCamera = new Camera;
         InputEvent* m_Input = nullptr;
         WindowManager* m_Window = nullptr;
         Pipeline* api = new Pipeline();
+		LayerStack* m_LayerStack = new LayerStack();
 
     private:
         int m_window_height;

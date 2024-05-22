@@ -6,10 +6,8 @@
 
 namespace Engine 
 {
-	Application::Application()
+	Application::Application(ConfigLoader* config) : config(config)
 	{
-		// Load the configuration file
-		config = new ConfigLoader("config", "BaseEngine.ini");
 		m_Input = new InputEvent("config", "BaseInput.ini");
 
 	    // Set the window properties
@@ -48,18 +46,36 @@ namespace Engine
 	// Termination of the application
 	Application::~Application()
 	{
+		for (Layer* layer : m_LayerStack->m_Layers)
+		{
+			layer->OnDetach();
+			delete layer;
+		}
 		api->Terminate();
 		m_Window->Terminate(config);
 	}
 
 	void Application::Run()
 	{
+		for (Layer* layer : m_LayerStack->m_Layers)
+		{
+			layer->OnInput();
+		}
+
+		for (Layer* layer : m_LayerStack->m_Layers)
+		{
+			layer->OnAttach();
+		}
+
 		while (!glfwWindowShouldClose(m_Window->getWindow())) {
 			// process input
 			m_Input->processInput(m_Window->getWindow());
 
 			// Update
-			OnUpdate();
+			for (Layer* layer : m_LayerStack->m_Layers)
+			{
+				layer->OnUpdate();
+			}
 
 			// render
 			api->Render(config, &m_aspect_ratio, m_MainCamera);
@@ -70,5 +86,15 @@ namespace Engine
 			// Poll for and process events
 			glfwPollEvents();
 		};
+	}
+
+	void Application::pushLayer(Layer* layer)
+	{
+		m_LayerStack->PushLayer(layer);
+	}
+
+	void Application::popLayer(Layer* layer)
+	{
+		m_LayerStack->PopLayer(layer);
 	}
 }
