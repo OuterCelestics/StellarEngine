@@ -1,8 +1,8 @@
 -- premake5.lua
-workspace "StellarEngine"
+workspace "Stellar"
    architecture "x64"
    configurations { "Debug", "Release", "Dist" }
-   startproject "Application"
+   startproject "StellarEditor"
 
    -- Workspace-wide build options for MSVC
    filter "system:windows"
@@ -14,7 +14,7 @@ group "Dependencies"
    include "Submodules/GLFW/Build-GLFW.lua"
 
 group "Engine"
-	include "Engine/Build-Engine.lua"
+	include "StellarEngine/Build-StellarEngine.lua"
 group ""
 
-include "Application/Build-Application.lua"
+include "StellarEditor/Build-StellarEditor.lua"
