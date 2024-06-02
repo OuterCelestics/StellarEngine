@@ -18,5 +18,5 @@ After downloading, either place the premake5.exe into the "Scripts" folder or ad
 ### Note that no macOS or Linux setup script is currently provided;
 
 
-## Thanks to the following contributers
+## Thanks to the following contributors
 [ZaroDev](https://github.com/ZaroDev)
