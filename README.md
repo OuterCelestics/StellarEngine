@@ -1,4 +1,4 @@
-9 # Stellar Engine
+Stellar Engine
 
 This is a little instruction on how you should setup the engine for use!
 
