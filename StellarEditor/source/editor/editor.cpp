@@ -1,4 +1,5 @@
 #include "editor.h"
+#include <iostream>
 
 namespace Editor {
 	Editor::Editor(Application* app)
@@ -12,6 +13,23 @@ namespace Editor {
 	void Editor::OnAttach()
 	{
 		reload = new Utils::ShaderReload(m_Shader);
+		m_ActiveScene = new Scene();
+
+		// create a new entity
+		auto entity = m_ActiveScene->CreateEntity("Test Entity");
+		entity.AddComponent<MeshRendererComponent>();
+
+		// manipulate the entity
+		if (entity)
+		{
+			auto& mesh = entity.GetComponent<MeshRendererComponent>();
+
+			// TODO: load a mesh and shader from file
+			/*mesh.mesh = new Mesh("assets/models/cube.obj");
+			mesh.shader = new Shader("shaders/default.vs", "shaders/default.frag");*/
+
+			std::cout << "Entity tag: " << entity.GetComponent<TagComponent>().Tag << std::endl;
+		}
 	}
 
 	void Editor::OnInput()
