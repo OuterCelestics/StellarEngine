@@ -3,9 +3,10 @@
 #include <fstream>
 #include <filesystem>
 #include <map>
+#include "../../core.h"
 
 namespace Engine {
-    class ConfigLoader {
+    class ENGINE_API ConfigLoader {
     public:
         ConfigLoader(std::string folder, std::string file_name);
 
