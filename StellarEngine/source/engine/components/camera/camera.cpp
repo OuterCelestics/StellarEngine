@@ -79,10 +79,10 @@ namespace Engine {
 		// Constrain pitch so we cant get upside down
 		if (constrainPitch)
 		{
-			if (pitch > 90.0f)
-				pitch = 90.0f;
-			if (pitch < -90)
-				pitch = 90;
+			if (pitch > 89.9f)
+				pitch = 89.9f;
+			if (pitch < -89.9)
+				pitch = 89.9;
 		}
 
 		UpdateCameraVectors();
