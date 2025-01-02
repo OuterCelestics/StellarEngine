@@ -20,3 +20,5 @@ After downloading, either place the premake5.exe into the "Scripts" folder or ad
 
 ## Thanks to the following contributors
 [ZaroDev](https://github.com/ZaroDev)
+
+#### © copyright 2023 - 2025 | Luke van den Broek - Jonas de Bruin
